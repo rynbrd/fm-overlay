@@ -1,0 +1,13 @@
+Common subdirectories: rubyripper-0.6.0/locale and rubyripper-0.6.0-fm-preemp/locale
+diff -u rubyripper-0.6.0/rubyripper_gtk2.rb rubyripper-0.6.0-fm-preemp/rubyripper_gtk2.rb
+--- rubyripper-0.6.0/rubyripper_gtk2.rb	2010-06-18 14:36:16.000000000 -0500
++++ rubyripper-0.6.0-fm-preemp/rubyripper_gtk2.rb	2011-05-03 11:37:18.977083168 -0500
+@@ -1029,8 +1029,6 @@
+ 	# signal for create single file
+ 	def createSingle
+ 		@tableToc3.each{|child| child.sensitive = !@create_single_file.active?}
+-		@correctPreEmphasis.active = true
+-		@doNotCorrectPreEmphasis.sensitive = !@create_single_file.active?
+ 	end
+ 	
+ 	#set signals for the toc

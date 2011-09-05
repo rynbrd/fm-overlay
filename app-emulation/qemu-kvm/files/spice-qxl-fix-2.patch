@@ -1,0 +1,12 @@
+--- hw/qxl.c~	2011-06-23 13:30:41.000000000 +0100
++++ hw/qxl.c	2011-06-23 13:44:25.566847639 +0100
+@@ -791,7 +791,9 @@
+            __FUNCTION__, memslot.slot_id,
+            memslot.virt_start, memslot.virt_end);
+ 
++    qxl_unlock_iothread(&d->ssd);
+     d->ssd.worker->add_memslot(d->ssd.worker, &memslot);
++    qxl_lock_iothread(&d->ssd);
+     d->guest_slots[slot_id].ptr = (void*)memslot.virt_start;
+     d->guest_slots[slot_id].size = memslot.virt_end - memslot.virt_start;
+     d->guest_slots[slot_id].delta = delta;

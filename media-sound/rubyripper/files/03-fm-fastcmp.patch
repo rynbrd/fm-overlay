@@ -1,0 +1,132 @@
+Common subdirectories: rubyripper-0.6.0/locale and rubyripper-0.6.0-fm-fastcmp/locale
+diff -u rubyripper-0.6.0/rr_lib.rb rubyripper-0.6.0-fm-fastcmp/rr_lib.rb
+--- rubyripper-0.6.0/rr_lib.rb	2010-06-18 14:36:16.000000000 -0500
++++ rubyripper-0.6.0-fm-fastcmp/rr_lib.rb	2011-05-05 18:49:45.288776172 -0500
+@@ -1940,27 +1940,110 @@
+ 		return true
+ 	end
+ 
++	def compareChunk(chunk1, chunk2, pos=0)
++		errors = Array.new
++		if chunk1 != chunk2
++			if chunk1.length == 1
++				errors << pos
++			else
++				len = (chunk1.length/2).truncate
++				e1 = compareChunk(chunk1[0, len], chunk2[0, len], pos)
++				e2 = compareChunk(chunk1[len, chunk1.length - len], chunk2[len, chunk2.length - len], pos + len)
++				errors = e1 + e2
++			end
++		end
++		return errors
++	end
++
++	def compareBytesSlow(file1, file2, skip=0, readsize=4096)
++		errors = Array.new
++		size = File.size(file1)
++		if skip >= size
++			return errors
++		end
++
++		realreadsize = readsize - (skip % readsize)
++		location = skip
++
++		fp1 = File.new(file1, 'r')
++		fp2 = File.new(file2, 'r')
++		fp1.pos = location
++		fp2.pos = location
++
++		while location <= size
++			d1 = fp1.read(realreadsize)
++			d2 = fp2.read(realreadsize)
++			errors += compareChunk(d1, d2, location - skip)
++
++			location += realreadsize
++			if (realreadsize != readsize)
++				realreadsize = readsize
++			end
++		end
++
++		return errors
++	end
++
++	def compareBytesFast(file1, file2, skip=0, blocksize=4096)
++		errors = Array.new
++		res = %x[cmp -i #{skip} -l "#{file1}" "#{file2}" | awk '{print $1}']
++		res.split.each { |byte| errors << byte.to_i - 1 }
++		return errors
++	end
++
++	def compareBlocks(files, skip=0, blocksize=4096, readsize=4096)
++		blocks = Hash.new
++		bytes = nil
++
++		(1..files.count-1).each do |i|
++			start = Time.now
++
++			if installed('cmp')
++				puts "Using fast cmp.\n" if @settings['debug']
++				bytes = compareBytesFast(files[0], files[i], skip)
++			else
++				puts "Using slow cmp.\n" if @settings['debug']
++				bytes = compareBytesSlow(files[0], files[i], skip)
++			end
++
++			if bytes == nil
++				return nil
++			end
++
++			bytes.each { |byte| blocks[blocksize * ((byte + skip) / blocksize).truncate] = Array.new }
++
++			stop = Time.now - start
++			puts "Analysis took %f seconds with %d errors.\n" % [stop, bytes.count] if @settings['debug']
++		end
++
++		files.each do |file|
++			fp = File.new(file)
++			blocks.keys.each do |offset|
++				fp.pos = offset
++				blocks[offset] << fp.read(blocksize)
++			end
++			fp.close
++		end
++
++		return blocks
++	end
++
+ 	def analyzeFiles(track)
+ 		@settings['log'].add(_("Analyzing files for mismatching chunks\n"))
+ 		files = Array.new
+-		@reqMatchesAll.times do |time|
+-			files << File.new(@settings['Out'].getTempFile(track, time + 1), 'r')
+-		end
+-				
+-		(@reqMatchesAll - 1).times do |time|
+-			index = 0 ; files.each{|file| file.pos = 44} # 44 = wav container overhead, 2352 = size for a audiocd sector as used in cdparanoia
+-			while index + 44 < @settings['cd'].getFileSize(track)
+-				if !@errors.key?(index) && files[0].read(2352) != files[time + 1].read(2352) # Does this sector matches the previous ones? and isn't the position already known?
+-					files.each{|file| file.pos = index + 44} # Reset each read position of the files
+-					@errors[index] = Array.new
+-					files.each{|file| @errors[index] << file.read(2352)} # Save the chunk for all files in the just created array
+-				end
+-				index += 2352
+-			end
++		@reqMatchesAll.times { |time| files << @settings['Out'].getTempFile(track, time + 1) }
++
++		skip = 44			# WAV header
++		blocksize = 2352	# Redbook blocksize
++		readsize = 4096		# Typical filesystem blocksize size
++
++		if @settings['debug']
++			puts "Starting comparison, file count is %d:\n" % [files.count]
++			files.each { |file| puts "  %s\n" % [file] }
+ 		end
+-		
+-		files.each{|file| file.close}
+-		
++
++		@errors = compareBlocks(files, skip, blocksize, readsize)
++
+ 		# Remove the files now we analyzed them. Differences are saved in memory.
+ 		(@reqMatchesAll - 1).times{|time| File.delete(@settings['Out'].getTempFile(track, time + 2))}
+  

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+EBUILDS=$(find . -name *.ebuild)
+for EBUILD in $EBUILDS; do
+	ebuild $EBUILD digest
+done
+
