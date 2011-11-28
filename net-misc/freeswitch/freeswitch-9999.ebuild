@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2008-2010 Stefan Knoblich <s.knoblich@axsentis.de>
+# Copyright (C) 2008-2011 Stefan Knoblich <s.knoblich@axsentis.de>
 #
 # Distributed under the terms of the GNU General Public License 2
 # see http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt for
@@ -7,34 +7,38 @@
 #
 
 EAPI="2"
+PYTHON_DEPEND="2"
 
-inherit autotools flag-o-matic python
+inherit autotools eutils flag-o-matic python
 
 DESCRIPTION="FreeSWITCH telephony platform GIT Head"
 HOMEPAGE="http://www.freeswitch.org/"
 
+KEYWORDS="~amd64 ~x86"
+
 if [ "${PV}" = "9999" ]; then
 	inherit git
 	EGIT_REPO_URI="git://git.freeswitch.org/freeswitch.git"
-	EGIT_BOOTSTRAP="bootstrap.sh"
+	EGIT_BOOTSTRAP=""
+	KEYWORDS=""
 else
 	SRC_URI="http://files.freeswitch.org/${P/_/}.tar.bz2"
 	S="${WORKDIR}/${P/_/}"
 fi
 
 LICENSE="MPL-1.1"
-KEYWORDS=""
 SLOT="0"
 
-IUSE="esl +libedit nosamples odbc +resampler sctp"
+IUSE="esl nosamples odbc +resampler sctp libpri"
 
 IUSE_ESL="esl-ruby esl-php esl-perl esl-python esl-lua"
 
-IUSE_MODULES="alsa amr amrwb bv +cdr_csv celt cepstral cidlookup cluechoo +console curl dialplan_asterisk dialplan_directory
-	distributor easyroute erlang_event fax file_string flite freetdm +g723_1 g729 gsmopen h26x +ilbc java dingaling lcr ldap +limit +local_stream +logfile +lua
-	managed memcache nibblebill opal openzap perl pocketsphinx portaudio portaudio_stream python radius_cdr
-	shell_stream shout silk siren skinny skypopen snapshot +sndfile +sofia +speex spidermonkey spy +syslog
-	+tone_stream tts_commandline unimrcp valet_parking vmd +voicemail +voipcodecs
+IUSE_MODULES="alsa amr amrwb avmd bv +cdr_csv cdr_pg_csv cdr_sqlite celt cepstral cidlookup +console curl
+	+db dialplan_asterisk dialplan_directory dingaling distributor easyroute erlang_event
+	flite freetdm fsk +g723_1 g729 gsmopen h26x +hash +ilbc java lcr ldap +limit +local_stream +logfile +lua
+	managed memcache mp4 mp4v nibblebill opal osp perl pocketsphinx portaudio portaudio_stream python radius_cdr redis rtmp
+	shell_stream shout silk siren skinny skypopen snapshot +sndfile +sofia +spandsp +speex spidermonkey spy +syslog
+	+tone_stream tts_commandline unimrcp valet_parking vmd +voicemail
 	xml_cdr xml_curl xml_ldap xml_rpc yaml
 "
 
@@ -42,7 +46,10 @@ IUSE_MODULES="alsa amr amrwb bv +cdr_csv celt cepstral cidlookup cluechoo +conso
 IUSE_LINGUAS="de +en es fr it nl ru zh"
 
 # inter-module dependencies
-INTER_MODULE_DEPENDS=""
+INTER_MODULE_DEPENDS="
+	limit:db
+	limit:hash
+"
 
 # modules need these core functions
 CORE_MODULE_DEPENDS="
@@ -53,7 +60,6 @@ CORE_MODULE_DEPENDS="
 
 # external dependencies of modules
 MODULES_RDEPEND="
-	freeswitch_modules_fax?  ( media-libs/tiff )
 	freeswitch_modules_alsa? ( media-libs/alsa-lib )
 	freeswitch_modules_radius_cdr? ( net-dialup/freeradius-client )
 	freeswitch_modules_xml_curl? ( net-misc/curl )
@@ -62,7 +68,7 @@ MODULES_RDEPEND="
 	freeswitch_modules_java? ( >=virtual/jdk-1.5 )
 	freeswitch_modules_opal? ( >=net-libs/opal-9999
 				   >=net-libs/ptlib-9999 )
-	freeswitch_modules_python? ( >=dev-lang/python-2.4 )
+	freeswitch_modules_python? ( =dev-lang/python-2* )
 	freeswitch_modules_managed? ( >=dev-lang/mono-1.9 )
 	freeswitch_modules_nibblebill? ( dev-db/unixODBC )
 	freeswitch_modules_easyroute? ( dev-db/unixODBC )
@@ -71,6 +77,11 @@ MODULES_RDEPEND="
 	freeswitch_modules_memcache? ( net-misc/memcached )
 	freeswitch_modules_erlang_event? ( dev-lang/erlang )
 	freeswitch_modules_shout? ( media-libs/libogg )
+	freeswitch_modules_osp? ( >=net-libs/osptoolkit-3.5.0 )
+	freeswitch_modules_freetdm? ( libpri? ( >=net-libs/libpri-1.4.0 ) )
+	freeswitch_modules_spandsp? ( media-libs/jpeg )
+	freeswitch_modules_redis? ( dev-db/redis )
+	freeswitch_modules_cdr_pg_csv? ( dev-db/postgresql-base )
 "
 
 # external core dependencies
@@ -95,7 +106,7 @@ DEPEND="${RDEPEND}
 	>=sys-devel/automake-1.10
 	sctp? ( kernel_linux? ( net-misc/lksctp-tools ) )"
 
-PDEPEND=">=net-misc/freeswitch-sounds-1.0.11
+PDEPEND=">=net-misc/freeswitch-sounds-1.0.14
 	 >=net-misc/freeswitch-music-1.0.8"
 
 ###
@@ -232,7 +243,7 @@ pkg_setup() {
 		mod="${x%:*}"
 		dep="${x#*:}"
 
-		if hasq "freeswitch_modules_${mod}" ${FREESWITCH_AUTO_USE} ${USE} && ! use "${dep}"; then
+		if has "freeswitch_modules_${mod}" ${FREESWITCH_AUTO_USE} ${USE} && ! use "${dep}"; then
 			# check if this core option has an external dependency
 			if $(echo "${CORE_RDEPEND}" | grep -q "${dep}\?"); then
 				eerror "Module \"${mod}\" requires core useflag \"${dep}\","
@@ -279,6 +290,15 @@ pkg_setup() {
 	# DONE
 	#
 	export FREESWITCH_AUTO_USE="${FREESWITCH_AUTO_USE}"
+
+	#
+	# 7. set active python version
+	#
+	if use freeswitch_modules_python || use esl-python
+	then
+		python_set_active_version 2
+		python_pkg_setup
+	fi
 }
 
 
@@ -412,7 +432,7 @@ fs_check_modules_api_compat() {
 
 
 		# skip modules that are in our list but disabled (= will be uninstalled)
-		if hasq "${name}" $(echo "${IUSE_MODULES}" | tr -d '+') && ! useq "freeswitch_modules_${name}"; then
+		if has "${name}" $(echo "${IUSE_MODULES}" | tr -d '+') && ! useq "freeswitch_modules_${name}"; then
 			continue
 		fi
 
@@ -479,10 +499,6 @@ fs_set_module() {
 	mod_freetdm)
 		category="../../libs/freetdm"
 		mod="mod_freetdm"
-		;;
-	mod_openzap)
-		category="../../libs/openzap"
-		mod="mod_openzap"
 		;;
 	*)
 		category="$(ls -d src/mod/*/${mod} | cut -d'/' -f3)"
@@ -556,7 +572,7 @@ setup_modules() {
 #
 
 fs_use() {
-	if hasq $1 ${FREESWITCH_AUTO_USE} ${USE}; then
+	if has $1 ${FREESWITCH_AUTO_USE} ${USE}; then
 		return 0
 	fi
 	return 1
@@ -566,7 +582,7 @@ fs_enable() {
 	local option value
 
 	if [ -z "${1}" ]; then
-		eerror "fs_enable(): Usage fs_conf_enable <useflag> [<optname> [<optvalue>]]"
+		eerror "fs_enable(): Usage fs_enable <useflag> [<optname> [<optvalue>]]"
 		return 1
 	fi
 
@@ -590,7 +606,7 @@ fs_with() {
 	local option value
 
 	if [ -z "${1}" ]; then
-		eerror "fs_with(): Usage fs_conf_with <useflag> [<optname> [<optvalue>]]"
+		eerror "fs_with(): Usage fs_with <useflag> [<optname> [<optvalue>]]"
 		return 1
 	fi
 
@@ -603,7 +619,7 @@ fs_with() {
 		option="${1}"
 	fi
 
-	if hasq $1 ${FREESWITCH_AUTO_USE} ${USE}; then
+	if has $1 ${FREESWITCH_AUTO_USE} ${USE}; then
 		echo "--with-${option}${value}"
 	else
 		echo "--without-${option}"
@@ -711,19 +727,19 @@ fs_set_permissions() {
 	einfo "Setting file and directory permissions..."
 
 	# sysconfdir
-	chown -R root:freeswitch "${prefix}/etc/freeswitch"
-	chmod -R u=rwX,g=rX,o=   "${prefix}/etc/freeswitch"
+	chown -R root:freeswitch "${prefix}/etc/freeswitch" || die
+	chmod -R u=rwX,g=rX,o=   "${prefix}/etc/freeswitch" || die
 
 	# prefix
-	chown -R root:freeswitch "${prefix}/opt/freeswitch"
-	chmod -R u=rwX,g=rX,o=   "${prefix}/opt/freeswitch"
+	chown -R root:freeswitch "${prefix}/opt/freeswitch" || die
+	chmod -R u=rwX,g=rX,o=   "${prefix}/opt/freeswitch" || die
 	# allow read access for things like building external modules
-	chmod -R u=rwx,g=rx,o=rx "${prefix}/opt/freeswitch/"{lib*,bin,include}
-	chmod    u=rwx,g=rx,o=rx "${prefix}/opt/freeswitch"
+	chmod -R u=rwx,g=rx,o=rx "${prefix}/opt/freeswitch/"{lib*,bin,include} || die
+	chmod    u=rwx,g=rx,o=rx "${prefix}/opt/freeswitch" || die
 
 	# directories owned by the fs user
 	for x in db run log cores storage recordings; do
-		chown -R freeswitch:freeswitch "${prefix}/opt/freeswitch/${x}"
+		chown -R freeswitch:freeswitch "${prefix}/opt/freeswitch/${x}" ||  die
 	done
 }
 
@@ -741,14 +757,23 @@ src_unpack() {
 
 	cd "${S}"
 	#
-	# 1. buildsystem workarounds remove as soon as the fix has been comitted
+	# 1. custom user patches
 	#
-	epatch "${FILESDIR}/${P}-libsndfile-remove-autogen-dep.patch"
+	epatch_user
 }
 
 src_prepare() {
+	local BOOTSTRAP_OPTS=""
+
 	if [ "${PV}" = "9999" ]; then
 		git_src_prepare
+
+		# multi-threaded bootstrap
+		[ "${MAKEOPTS}" != "${MAKEOPTS/-j}" ] && {
+			einfo "Using parallel bootstrap..."
+			BOOTSTRAP_OPTS="-j"
+		}
+		./bootstrap.sh ${BOOTSTRAP_OPTS}
 	fi
 
 	#
@@ -783,13 +808,16 @@ src_prepare() {
 }
 
 src_configure() {
-	local java_opts
+	local java_opts config_opts
 
 	#
 	# option handling
 	#
 	fs_use freeswitch_modules_java && \
 		java_opts="--with-java=$(/usr/bin/java-config -O)"
+
+	fs_use libpri && \
+		config_opts="--with-libpri"
 
 	#
 	# 1. filter some flags known to break things
@@ -802,20 +830,26 @@ src_configure() {
 	filter-flags -fvisibility-inlines-hidden
 
 	#
-	# 2. configure
+	# 2. configure (can't use econf thanks to b0rked buildsystem)
 	#
 	einfo "Configuring FreeSWITCH..."
-	econf \
-		-C \
+	./configure -C \
+		--host=${CHOST} \
+		${CBUILD:+--build=${CBUILD}} \
+		${CTARGET:+--target=${CTARGET}} \
 		--prefix=/opt/freeswitch \
 		--libdir=/opt/freeswitch/lib \
 		--sysconfdir=/opt/freeswitch/conf \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--datadir=/usr/share \
+		--enable-core-libedit-support \
+		--with-pkgconfigdir=/usr/$(get_libdir)/pkgconfig \
 		$(fs_enable sctp) \
-		$(fs_with freeswitch_modules_python python) \
+		$(fs_with freeswitch_modules_python python "$(PYTHON -a)") \
 		$(fs_enable resampler resample) \
 		$(fs_enable odbc core-odbc-support) \
-		$(fs_enable libedit core-libedit-support) \
-		${java_opts} || die "failed to configure FreeSWITCH"
+		${java_opts} ${config_opts} || die "failed to configure FreeSWITCH"
 
 	#
 	# 3. configure FreeTDM
@@ -828,7 +862,8 @@ src_configure() {
 			--prefix=/opt/freeswitch \
 			--libdir=/opt/freeswitch/lib \
 			--sysconfdir=/opt/freeswitch/conf \
-			|| die "failed to configure FreeTDM"
+			--with-pkgconfigdir=/usr/$(get_libdir)/pkgconfig \
+			${config_opts} || die "failed to configure FreeTDM"
 	fi
 }
 
@@ -852,15 +887,6 @@ src_compile() {
 	then
 		einfo "Building FreeTDM..."
 		emake -j1 -C libs/freetdm || die "failed to build FreeTDM"
-	fi
-
-	#
-	# build OpenZAP (avoids some problems later)
-	#
-	if use freeswitch_modules_openzap
-	then
-		einfo "Building OpenZAP..."
-		emake -j1 -C libs/openzap || die "failed to build OpenZAP"
 	fi
 
 	#
@@ -951,7 +977,7 @@ src_install() {
 	#
 	# 3. Remove .a and .la files
 	#
-	find "${D}" \( -name "*.la" -or -name "*.a" \) -exec rm -f "{}" \; || die "Failed to cleanup .a and .la files"
+	find "${D}" \( -name "mod*.la" -or -name "mod*.a" -or -name "lib*.a" \) -exec rm -f "{}" \; || die "Failed to cleanup .a and .la files"
 
 	#
 	# 4. move freeswitch and freetdm
@@ -959,7 +985,7 @@ src_install() {
 	#    remove old pkgconfig dir(s) if empty
 	#
 	dodir "/usr/$(get_libdir)/pkgconfig"
-	find "${D}/opt/freeswitch" \( -name "freeswitch.pc" -or -name "freetdm.pc" -or -name "openzap.pc" \) -exec \
+	find "${D}/opt/freeswitch" \( -name "freeswitch.pc" -or -name "freetdm.pc" \) -exec \
 		mv "{}" "${D}/usr/$(get_libdir)/pkgconfig" \;
 	rmdir "${D}"/opt/freeswitch/lib*/pkgconfig 2>/dev/null
 
