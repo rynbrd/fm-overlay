@@ -87,9 +87,6 @@ src_prepare() {
 		rm -f samples/*/*.dsw
 	fi
 
-	# upstream patch 2808915
-	epatch "${FILESDIR}"/${PN}-3.6.4-jdkroot.patch
-
 	# h224 really needs h323 ?
 	# TODO: get a confirmation in ml
 	sed -i -e "s:\(.*HAS_H224.*\), \[OPAL_H323\]:\1:" configure.ac \
