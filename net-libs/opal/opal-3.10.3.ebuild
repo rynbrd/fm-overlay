@@ -15,11 +15,12 @@ SRC_URI="mirror://sourceforge/opalvoip/${P}.tar.bz2
 LICENSE="MPL-1.0"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="+audio capi celt debug doc dtmf examples fax ffmpeg h224 h281 h323 iax
+IUSE="+audio capi celt debug doc examples fax ffmpeg h224 h281 h323 iax
 ipv6 ivr ixj java ldap lid +plugins sbc sip sipim srtp ssl stats swig theora
 +video vpb vxml wav x264 x264-static xml"
 
-RDEPEND=">=net-libs/ptlib-2.10.3[stun,debug=,audio?,dtmf?,ipv6?,ldap?,ssl?,video?,vxml?,wav?,xml?]
+RDEPEND="sip? ( >=net-libs/ptlib-2.10.3[stun,dtmf,http,debug=,audio?,ipv6?,ldap?,ssl?,video?,vxml?,wav?,xml?] )
+	!sip? ( >=net-libs/ptlib-2.10.3[stun,dtmf,debug=,audio?,ipv6?,ldap?,ssl?,video?,vxml?,wav?,xml?] )
 	>=media-libs/speex-1.2_beta
 	fax? ( net-libs/ptlib[asn] )
 	h323? ( net-libs/ptlib[asn] )
@@ -44,8 +45,8 @@ DEPEND="${RDEPEND}
 
 # NOTES:
 # ffmpeg[encode] is for h263 and mpeg4
-# ssl, xml, vxml, ipv6, dtmf, ldap, audio, wav, and video are use flags
-#   herited from ptlib: feature is enabled if ptlib has enabled it
+# ssl, xml, vxml, ipv6, ldap, audio, wav, and video are use flags
+#   inherited from ptlib: feature is enabled if ptlib has enabled it
 #   however, disabling it if ptlib has it looks hard (coz of buildopts.h)
 #   forcing ptlib to disable it for opal is not a solution too
 #   atm, accepting the "auto-feature" looks like a good solution
@@ -86,6 +87,8 @@ src_prepare() {
 		rm -f samples/*/*.dsp
 		rm -f samples/*/*.dsw
 	fi
+
+	epatch "${FILESDIR}/opal-3.10.3-build-fixes.patch"
 
 	# h224 really needs h323 ?
 	# TODO: get a confirmation in ml

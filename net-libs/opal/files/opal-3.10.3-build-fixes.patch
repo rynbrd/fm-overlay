@@ -1,0 +1,53 @@
+diff -urN a/include//opal/mediafmt.h b/include//opal/mediafmt.h
+--- a/include//opal/mediafmt.h	2011-10-14 02:00:02.000000000 -0500
++++ b/include//opal/mediafmt.h	2011-11-28 16:32:21.013976999 -0600
+@@ -303,13 +303,11 @@
+     MergeType GetMerge() const { return m_merge; }
+     void SetMerge(MergeType merge) { m_merge = merge; }
+ 
+-#if OPAL_SIP
+     const PString & GetFMTPName() const { return m_FMTPName; }
+     void SetFMTPName(const char * name) { m_FMTPName = name; }
+ 
+     const PString & GetFMTPDefault() const { return m_FMTPDefault; }
+     void SetFMTPDefault(const char * value) { m_FMTPDefault = value; }
+-#endif // OPAL_SIP
+ 
+ #if OPAL_H323
+     struct H245GenericInfo {
+@@ -339,10 +337,8 @@
+     bool            m_readOnly;
+     MergeType       m_merge;
+ 
+-#if OPAL_SIP
+     PCaselessString m_FMTPName;
+     PString         m_FMTPDefault;
+-#endif // OPAL_SIP
+ 
+ #if OPAL_H323
+     H245GenericInfo m_H245Generic;
+diff -urN a/src//opal/mediafmt.cxx b/src//opal/mediafmt.cxx
+--- a/src//opal/mediafmt.cxx	2011-10-14 01:59:35.000000000 -0500
++++ b/src//opal/mediafmt.cxx	2011-11-28 16:32:56.553977746 -0600
+@@ -1455,10 +1455,8 @@
+     strm << right << setw(TitleWidth) << option.GetName() << " (R/" << (option.IsReadOnly() ? 'O' : 'W')
+          << ") = " << left << setw(10) << option;
+ 
+-#if OPAL_SIP
+     if (!option.GetFMTPName().IsEmpty())
+       strm << "  FMTP name: " << option.GetFMTPName() << " (" << option.GetFMTPDefault() << ')';
+-#endif // OPAL_SIP
+ 
+ #if OPAL_H323
+     const OpalMediaOption::H245GenericInfo & genericInfo = option.GetH245Generic();
+diff -urN a/src//opal/pres_ent.cxx b/src//opal/pres_ent.cxx
+--- a/src//opal/pres_ent.cxx	2011-10-14 01:59:35.000000000 -0500
++++ b/src//opal/pres_ent.cxx	2011-11-28 16:17:41.533976968 -0600
+@@ -32,6 +32,7 @@
+ #include <ptlib.h>
+ #include <opal/buildopts.h>
+ 
++#include <opal/endpoint.h>
+ #include <opal/pres_ent.h>
+ 
+ #include <opal/manager.h>
