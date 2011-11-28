@@ -60,8 +60,8 @@ MODULES_RDEPEND="
 	freeswitch_modules_xml_ldap? ( net-nds/openldap )
 	freeswitch_modules_ldap? ( net-nds/openldap )
 	freeswitch_modules_java? ( >=virtual/jdk-1.5 )
-	freeswitch_modules_opal? ( >=net-libs/opal-9999
-				   >=net-libs/ptlib-9999 )
+	freeswitch_modules_opal? ( >=net-libs/opal-3.10.3
+				   >=net-libs/ptlib-2.10.3 )
 	freeswitch_modules_python? ( >=dev-lang/python-2.4 )
 	freeswitch_modules_managed? ( >=dev-lang/mono-1.9 )
 	freeswitch_modules_nibblebill? ( dev-db/unixODBC )
