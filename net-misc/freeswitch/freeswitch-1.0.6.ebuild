@@ -807,6 +807,7 @@ src_configure() {
 	einfo "Configuring FreeSWITCH..."
 	econf \
 		-C \
+		--with-modinstdir=/usr/lib/freeswitch/mod
 		$(fs_enable sctp) \
 		$(fs_with freeswitch_modules_python python) \
 		$(fs_enable resampler resample) \
@@ -923,15 +924,9 @@ src_install() {
 			einfo "No previous installation of FreeSWITCH found, installing sample configuration..."
 		else
 			einfo "Removing sample configuration files..."
-			rm -r "${D}"/opt/freeswitch/conf/*
+			rm -r "${D}"/etc/freeswitch/*
 		fi
 	fi
-
-	# move configuration to /etc/freeswitch and
-	# create symlink to /opt/freeswitch/conf
-	dodir /etc
-	mv "${D}/opt/freeswitch/conf" "${D}/etc/freeswitch"
-	dosym /etc/freeswitch /opt/freeswitch/conf
 
 	# keep managed subdir
 	fs_use freeswitch_modules_managed && keepdir /opt/freeswitch/mod/managed
