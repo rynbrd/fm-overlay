@@ -807,9 +807,6 @@ src_configure() {
 	einfo "Configuring FreeSWITCH..."
 	econf \
 		-C \
-		--prefix=/opt/freeswitch \
-		--libdir=/opt/freeswitch/lib \
-		--sysconfdir=/opt/freeswitch/conf \
 		$(fs_enable sctp) \
 		$(fs_with freeswitch_modules_python python) \
 		$(fs_enable resampler resample) \
