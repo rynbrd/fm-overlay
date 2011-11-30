@@ -807,7 +807,7 @@ src_configure() {
 	einfo "Configuring FreeSWITCH..."
 	econf \
 		-C \
-		--with-modinstdir=/usr/lib/freeswitch/mod
+		--with-modinstdir=/usr/lib/freeswitch/mod \
 		$(fs_enable sctp) \
 		$(fs_with freeswitch_modules_python python) \
 		$(fs_enable resampler resample) \
