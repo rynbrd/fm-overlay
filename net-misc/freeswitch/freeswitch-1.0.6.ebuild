@@ -753,7 +753,7 @@ src_prepare() {
 	fi
 
 	epatch "${FILESDIR}/${P}-libsndfile-remove-autogen-dep.patch"
-	epatch "${FILESDIR}/${PV}-configure.patch"
+	epatch "${FILESDIR}/${P}-configure.patch"
 
 	#
 	# 0. create freetdm configure
