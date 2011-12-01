@@ -273,7 +273,7 @@ pkg_setup() {
 	# 6. create user + group
 	#
 	enewgroup freeswitch
-	enewuser freeswitch -1 -1 /opt/freeswitch freeswitch
+	enewuser freeswitch -1 -1 /var/lib/freeswitch freeswitch
 
 	#
 	# DONE
@@ -313,9 +313,9 @@ fs_check_core_abi_compat() {
 	fi
 
 	# no need to check anything if there's no previous install...
-	[ ! -e "${ROOT}"/opt/freeswitch/mod ] && return 0
+	[ ! -e "${ROOT}"/usr/lib/freeswitch/modules ] && return 0
 
-	libfreeswitch="$(ls -1 "${ROOT}"/opt/freeswitch/lib/libfreeswitch.so.*.*.*)"
+	libfreeswitch="$(ls -1 "${ROOT}"/usr/lib/libfreeswitch.so.*.*.*)"
 	if [ ! -f "${libfreeswitch}" ]; then
 		eerror "Failed to locate old libfreeswitch"
 		return 1
@@ -344,7 +344,7 @@ fs_check_core_abi_compat() {
 	}
 	EOF
 
-	libfreeswitch="$(ls -1 "${D}"/opt/freeswitch/lib/libfreeswitch.so.*.*.*)"
+	libfreeswitch="$(ls -1 "${D}"/usr/lib/libfreeswitch.so.*.*.*)"
 	if [ ! -f "${libfreeswitch}" ]; then
 		eerror "Failed to locate new libfreeswitch"
 		return 1
@@ -370,13 +370,13 @@ fs_check_modules_api_compat() {
 	fi
 
 	# no need to check anything if there's no previous install...
-	[ ! -e "${ROOT}"/opt/freeswitch/mod ] && return 0
+	[ ! -e "${ROOT}"/usr/lib/freeswitch/modules ] && return 0
 
 	# create an awk script with the list of "switch_*" symbols exported by libfreeswitch
 	# run the script once for each module, the list of needed "switch_*" symbols is supplied via stdin
 	# (raw nm output)
 	#
-	libfreeswitch="$(ls -1 "${ROOT}"/opt/freeswitch/lib/libfreeswitch.so.*.*.*)"
+	libfreeswitch="$(ls -1 "${ROOT}"/usr/lib/libfreeswitch.so.*.*.*)"
 	if [ ! -f "${libfreeswitch}" ]; then
 		eerror "Failed to locate libfreeswitch"
 		return 1
@@ -402,13 +402,13 @@ fs_check_modules_api_compat() {
 	EOF
 
 	einfo "Checking for incompatible modules..."
-	for x in "${ROOT}"/opt/freeswitch/mod/mod_*.so; do
+	for x in "${ROOT}"/usr/lib/freeswitch/modules/mod_*.so; do
 		mod="$(basename "${x}")"
 		name="$(echo "${mod}" | sed -e 's:^mod_\(.\+\)\.so$:\1:')"
 		need_upgrade="no"
 
 		# no need to check modules that will be overwritten
-		[ -e "${D}/opt/freeswitch/mod/${mod}" ] && continue
+		[ -e "${D}/usr/lib/freeswitch/modules/${mod}" ] && continue
 
 
 		# skip modules that are in our list but disabled (= will be uninstalled)
@@ -714,16 +714,21 @@ fs_set_permissions() {
 	chown -R root:freeswitch "${prefix}/etc/freeswitch"
 	chmod -R u=rwX,g=rX,o=   "${prefix}/etc/freeswitch"
 
-	# prefix
-	chown -R root:freeswitch "${prefix}/opt/freeswitch"
-	chmod -R u=rwX,g=rX,o=   "${prefix}/opt/freeswitch"
-	# allow read access for things like building external modules
-	chmod -R u=rwx,g=rx,o=rx "${prefix}/opt/freeswitch/"{lib*,bin,include}
-	chmod    u=rwx,g=rx,o=rx "${prefix}/opt/freeswitch"
+	# logs
+	chown -R root:freeswitch  "${prefix}/var/log/freeswitch"
+	chmod    u=rwX,g=rwX,o=rX "${prefix}/var/log/freeswitch"
 
-	# directories owned by the fs user
-	for x in db run log cores storage recordings; do
-		chown -R freeswitch:freeswitch "${prefix}/opt/freeswitch/${x}"
+	# pid file
+	chown -R root:freeswitch  "${prefix}/var/run/freeswitch"
+	chmod    u=rwX,g=rwX,o=rX "${prefix}/var/run/freeswitch"
+
+	# local data
+	chown -R root:freeswitch "${prefix}/var/lib/freeswitch"
+	chmod -R u=rwX,g=rX,o=rX "${prefix}/var/lib/freeswitch"
+
+	# freeswitch writable local data
+	for x in db cores storage recordings; do
+		chmod g+w "${prefix}/var/lib/freeswitch/${x}"
 	done
 }
 
@@ -740,16 +745,15 @@ src_unpack() {
 	fi
 
 	cd "${S}"
-	#
-	# 1. buildsystem workarounds remove as soon as the fix has been comitted
-	#
-	epatch "${FILESDIR}/${P}-libsndfile-remove-autogen-dep.patch"
 }
 
 src_prepare() {
 	if [ "${PV}" = "9999" ]; then
 		git_src_prepare
 	fi
+
+	epatch "${FILESDIR}/${P}-libsndfile-remove-autogen-dep.patch"
+	epatch "${FILESDIR}/${PV}-configure.patch"
 
 	#
 	# 0. create freetdm configure
@@ -776,10 +780,6 @@ src_prepare() {
 		sed -i -e "/^LOCAL_/{ s:python-2\.[0-9]:python-${PYVER}:g; s:python2\.[0-9]:python${PYVER}:g }" \
 			libs/esl/python/Makefile || die "failed to change python locations in esl python module"
 	fi
-
-	#
-	# 3. workarounds remove as soon as the fix has been comitted
-	#
 }
 
 src_configure() {
@@ -805,9 +805,15 @@ src_configure() {
 	# 2. configure
 	#
 	einfo "Configuring FreeSWITCH..."
+	eautoconf
 	econf \
 		-C \
-		--with-modinstdir=/usr/lib/freeswitch/mod \
+		--prefix=/usr \
+		--sysconfdir=/etc/freeswitch \
+		--with-modinstdir=/usr/lib/freeswitch/modules \
+		--with-rundir=/var/run/freeswitch \
+		--with-logdir=/var/log/freeswitch \
+		--with-datadir=/var/lib/freeswitch \
 		$(fs_enable sctp) \
 		$(fs_with freeswitch_modules_python python) \
 		$(fs_enable resampler resample) \
@@ -823,9 +829,8 @@ src_configure() {
 		cd "${S}/libs/freetdm"
 		einfo "Configuring FreeTDM..."
 		econf \
-			--prefix=/opt/freeswitch \
-			--libdir=/opt/freeswitch/lib \
-			--sysconfdir=/opt/freeswitch/conf \
+			--prefix=/usr \
+			--sysconfdir=/etc/freeswitch \
 			|| die "failed to configure FreeTDM"
 	fi
 }
@@ -901,20 +906,22 @@ src_install() {
 	einfo "Installing documentation and misc files..."
 	dodoc AUTHORS NEWS README ChangeLog INSTALL
 
-	insinto /opt/freeswitch/scripts/rss
+	insinto /var/lib/freeswitch/scripts/rss
 	doins scripts/rss/rss2ivr.pl
 
-	keepdir /opt/freeswitch/{htdocs,log,log/{xml_cdr,cdr-csv},db,grammar,cores,storage,scripts,recordings}
+	keepdir /var/lib/freeswitch/{htdocs,db,grammar,cores,storage,scripts,recordings}
+	keepdir /var/log/freeswitch
+	keepdir /var/log/freeswitch/{xml_cdr,cdr-csv}
 
 	newinitd "${FILESDIR}"/freeswitch.rc6   freeswitch
 	newconfd "${FILESDIR}"/freeswitch.confd freeswitch
 
 	# save a copy of the default config
 	einfo "Saving a copy of the default configuration..."
-	find "${D}/opt/freeswitch/conf" -type f | sed -e "s:${D}/opt/freeswitch::" |\
+	find "${D}/etc/freeswitch" -type f | sed -e "s:${D}/etc/freeswitch::" |\
 	while read fn; do
-		docinto "$(dirname "${fn}")"
-		dodoc   "${D}/opt/freeswitch/${fn}"
+		docinto "conf/$(dirname "${fn}")"
+		dodoc   "${D}/etc/freeswitch/${fn}"
 	done
 
 	# remove sample configuration if the user wishes so,
@@ -929,7 +936,7 @@ src_install() {
 	fi
 
 	# keep managed subdir
-	fs_use freeswitch_modules_managed && keepdir /opt/freeswitch/mod/managed
+	fs_use freeswitch_modules_managed && keepdir /usr/lib/freeswitch/modules/managed
 
 	# TODO: install contributed stuff
 
@@ -951,9 +958,9 @@ src_install() {
 	#    remove old pkgconfig dir(s) if empty
 	#
 	dodir "/usr/$(get_libdir)/pkgconfig"
-	find "${D}/opt/freeswitch" \( -name "freeswitch.pc" -or -name "freetdm.pc" -or -name "openzap.pc" \) -exec \
+	find "${D}/usr" \( -name "freeswitch.pc" -or -name "freetdm.pc" -or -name "openzap.pc" \) -exec \
 		mv "{}" "${D}/usr/$(get_libdir)/pkgconfig" \;
-	rmdir "${D}"/opt/freeswitch/lib*/pkgconfig 2>/dev/null
+	rmdir "${D}"/usr/lib*/pkgconfig 2>/dev/null
 
 
 	#
