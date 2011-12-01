@@ -4,6 +4,7 @@
 # $Header: $
 
 FREESWITCH_BIN="${FREESWITCH_BIN:-/opt/freeswitch/bin/freeswitch}"
+FREESWITCH_PID="${FREESWITCH_PID:-/opt/freeswitch/run/freeswitch.pid}"
 
 depend() {
 	need net
@@ -23,13 +24,13 @@ start() {
 		OPTS="${OPTS} ${FREESWITCH_OPTS}"
 
 	ebegin "Starting Freeswitch"
-	start-stop-daemon --start --quiet --exec ${FREESWITCH_BIN} \
-		--pidfile /var/run/freeswitch.pid -- -nc ${OPTS}
+	start-stop-daemon --quiet --pidfile "${FREESWITCH_PID}" --exec "${FREESWITCH_BIN}" -- -nc ${OPTS}
 	eend $?
 }
 
 stop() {
 	ebegin "Stopping Freeswitch"
-	${FREESWITCH_BIN} -stop
+	start-stop-daemon --quiet --pidfile "${FREESWITCH_PID}" --exec "${FREESWITCH_BIN}" --stop
 	eend $?
 }
+
