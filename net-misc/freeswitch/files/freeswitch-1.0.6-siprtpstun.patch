@@ -1,0 +1,31 @@
+diff -urN a/src/mod/endpoints/mod_sofia/sofia.c b/src/mod/endpoints/mod_sofia/sofia.c
+--- a/src/mod/endpoints/mod_sofia/sofia.c	2010-04-06 13:05:28.000000000 -0500
++++ b/src/mod/endpoints/mod_sofia/sofia.c	2011-12-02 16:11:31.674002283 -0600
+@@ -2903,15 +2903,24 @@
+ 					} else if (!strcasecmp(var, "ext-rtp-ip")) {
+ 						if (!zstr(val)) {
+ 							char *ip = mod_sofia_globals.guess_ip;
++							char stun_ip[50] = "";
++							char *myip = stun_ip;
++
++							switch_copy_string(stun_ip, ip, sizeof(stun_ip));
+ 
+ 							if (!strcmp(val, "0.0.0.0")) {
+ 								switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_WARNING, "Invalid IP 0.0.0.0 replaced with %s\n",
+ 												  mod_sofia_globals.guess_ip);
+ 							} else if (!strcasecmp(val, "auto-nat")) {
+ 								ip = NULL;
+-							} else {
+-								ip = strcasecmp(val, "auto") ? val : mod_sofia_globals.guess_ip;
+-								sofia_clear_pflag(profile, PFLAG_AUTO_NAT);
++							} else if (strcasecmp(val, "auto")) {
++								switch_port_t port = 0;
++								if (sofia_glue_ext_address_lookup(profile, NULL, &myip, &port, val, profile->pool) == SWITCH_STATUS_SUCCESS) {
++									ip = myip;
++									sofia_clear_pflag(profile, PFLAG_AUTO_NAT);
++								} else {
++									switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, "Failed to get external ip.\n");
++								}
+ 							}
+ 							if (ip) {
+ 								if (!strncasecmp(ip, "autonat:", 8)) {

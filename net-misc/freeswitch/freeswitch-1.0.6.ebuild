@@ -740,16 +740,16 @@ src_unpack() {
 	fi
 
 	cd "${S}"
-	#
-	# 1. buildsystem workarounds remove as soon as the fix has been comitted
-	#
-	epatch "${FILESDIR}/${P}-libsndfile-remove-autogen-dep.patch"
 }
 
 src_prepare() {
 	if [ "${PV}" = "9999" ]; then
 		git_src_prepare
 	fi
+
+	# Apply patches
+	epatch "${FILESDIR}/${P}-libsndfile-remove-autogen-dep.patch"
+	epatch "${FILESDIR}/${P}-siprtpstun.patch"
 
 	#
 	# 0. create freetdm configure
