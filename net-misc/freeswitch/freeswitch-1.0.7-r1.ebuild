@@ -9,7 +9,7 @@
 EAPI="2"
 PYTHON_DEPEND="2"
 
-inherit autotools eutils flag-o-matic python git-2
+inherit autotools eutils flag-o-matic python git
 
 DESCRIPTION="FreeSWITCH telephony platform GIT Head"
 HOMEPAGE="http://www.freeswitch.org/"
