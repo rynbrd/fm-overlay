@@ -17,7 +17,7 @@ HOMEPAGE="http://www.freeswitch.org/"
 KEYWORDS="~amd64 ~x86"
 
 if [ "${PV}" = "9999" ]; then
-	inherit git
+	inherit git-2
 	EGIT_REPO_URI="git://git.freeswitch.org/freeswitch.git"
 	EGIT_BOOTSTRAP=""
 	KEYWORDS=""
