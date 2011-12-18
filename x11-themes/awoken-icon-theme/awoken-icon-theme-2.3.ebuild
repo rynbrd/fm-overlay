@@ -20,7 +20,9 @@ IUSE=""
 
 DEPEND="app-arch/unzip"
 RDEPEND="${DEPEND}
-	gnome-extra/zenity"
+	gnome-extra/zenity
+	x11-misc/xdg-utils
+	media-gfx/imagemagick"
 
 RESTRICT="binchecks strip"
 
@@ -35,6 +37,8 @@ src_unpack() {
 src_prepare() {
 	cd "${S}" || die
 	chown -R root:root "${MY_PN}" || die
+	cd "${S}/${MY_PN}" || die
+	epatch "${FILESDIR}/awoken-docfix.patch"
 }
 
 get_symlink_dest() {

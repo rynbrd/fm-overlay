@@ -1,0 +1,22 @@
+--- a/awoken-icon-theme-customization	2011-10-27 12:13:46.000000000 -0500
++++ b/awoken-icon-theme-customization	2011-12-18 01:31:08.534516000 -0600
+@@ -14,6 +14,8 @@
+ CONFDIR="$HOME/.icons"
+ # Path for the ppa installation:
+ USRDIR="/usr/share/icons"
++# Path to the documentation
++DOCDIR="/usr/share/doc/awoken-icon-theme-$VER"
+ 
+ echo "*************************************************************************"
+ echo "Initial settings. Current Release: $VER"
+@@ -156,8 +158,8 @@
+ 	# customize the set, so it re-prints the question
+ 	elif [ "$OPTION" = "Take a look at the README pdf with instructions" ]; then
+ 		  echo "Now I'll open readme file (if xdg-open is supported)."
+-		  if [ -f $DIR/$ICNST/Installation_and_Instructions.pdf ]; then
+-			xdg-open $DIR/$ICNST/Installation_and_Instructions.pdf &
++		  if [ -f $DOCDIR/Installation_and_Instructions.pdf ]; then
++			xdg-open $DOCDIR/Installation_and_Instructions.pdf &
+ 		  else
+ 			echo "Sorry, I cannot find the file, or xdg-open doesn't exist on your pc."
+ 		  fi
