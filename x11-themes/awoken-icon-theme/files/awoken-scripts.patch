@@ -1,0 +1,64 @@
+--- a/awoken-icon-theme-customization	2011-10-27 12:13:46.000000000 -0500
++++ b/awoken-icon-theme-customization	2011-12-18 01:52:38.126516001 -0600
+@@ -14,6 +14,10 @@
+ CONFDIR="$HOME/.icons"
+ # Path for the ppa installation:
+ USRDIR="/usr/share/icons"
++# Path to the documentation
++DOCDIR="/usr/share/doc/awoken-icon-theme-$VER"
++# Path to bin files
++BINDIR="/usr/bin"
+ 
+ echo "*************************************************************************"
+ echo "Initial settings. Current Release: $VER"
+@@ -83,30 +87,30 @@
+ 	echo "You chose: $OPTION"
+ #************************************************************************
+ 	if [ "$OPTION" = "Customize Clear version" ]; then
+-	  if [ -f $DIR/$ICNST/$ICNSTP-icon-theme-customization-clear ]; then
++	  if [ -f $BINDIR/$ICNSTP-icon-theme-customization-clear ]; then
+ 		echo "Now I'll run customization script for Clear version."
+ 		echo "*************************************************************************"
+-		bash $DIR/$ICNST/$ICNSTP-icon-theme-customization-clear
++		bash $BINDIR/$ICNSTP-icon-theme-customization-clear
+       else
+-        echo "It seems that there isn't any customization script for the clear iconset located in $DIR/$ICNST."
++        echo "It seems that there isn't any customization script for the clear iconset located in $BINDIR."
+       fi
+ #************************************************************************
+ 	elif [ "$OPTION" = "Customize Dark version" ]; then
+-	  if [ -f $DIR/$ICNST"Dark"/$ICNSTP-icon-theme-customization-dark ]; then
++	  if [ -f $BINDIR/$ICNSTP-icon-theme-customization-dark ]; then
+ 		echo "Now I'll run customization script for Dark version."
+ 		echo "*************************************************************************"
+-		bash $DIR/$ICNST"Dark"/$ICNSTP-icon-theme-customization-dark
++		bash $BINDIR/$ICNSTP-icon-theme-customization-dark
+       else
+-        echo "It seems that there isn't any customization script for the dark iconset located in $DIR/$ICNST"Dark.
++        echo "It seems that there isn't any customization script for the dark iconset located in $BINDIR."
+       fi
+ #************************************************************************
+ 	elif [ "$OPTION" = "Customize White version" ]; then
+-	  if [ -f $DIR/$ICNST"White"/$ICNSTP-icon-theme-customization-white ]; then
++	  if [ -f $BINDIR/$ICNSTP-icon-theme-customization-white ]; then
+ 		echo "Now I'll run customization script for White version."
+ 		echo "*************************************************************************"
+-		bash $DIR/$ICNST"White"/$ICNSTP-icon-theme-customization-white
++		bash $BINDIR/$ICNSTP-icon-theme-customization-white
+       else
+-        echo "It seems that there isn't any customization script for the dark iconset located in $DIR/$ICNST"White.
++        echo "It seems that there isn't any customization script for the dark iconset located in $BINDIR."
+       fi
+ #************************************************************************
+ 	elif [ "$OPTION" = "Colorize the iconset" ]; then
+@@ -156,8 +160,8 @@
+ 	# customize the set, so it re-prints the question
+ 	elif [ "$OPTION" = "Take a look at the README pdf with instructions" ]; then
+ 		  echo "Now I'll open readme file (if xdg-open is supported)."
+-		  if [ -f $DIR/$ICNST/Installation_and_Instructions.pdf ]; then
+-			xdg-open $DIR/$ICNST/Installation_and_Instructions.pdf &
++		  if [ -f $DOCDIR/Installation_and_Instructions.pdf ]; then
++			xdg-open $DOCDIR/Installation_and_Instructions.pdf &
+ 		  else
+ 			echo "Sorry, I cannot find the file, or xdg-open doesn't exist on your pc."
+ 		  fi

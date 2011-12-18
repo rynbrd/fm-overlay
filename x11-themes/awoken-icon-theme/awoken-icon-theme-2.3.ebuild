@@ -7,7 +7,7 @@ inherit eutils
 
 MY_PN="AwOken"
 MY_PV="AwOken-2.3"
-MY_DEST="/usr/share/icons/${MY_PN}"
+MY_SETS="AwOken AwOkenDark AwOkenWhite"
 
 DESCRIPTION="AwOken Icon Theme"
 HOMEPAGE="http://alecive.deviantart.com/art/AwOken-163570862"
@@ -31,17 +31,21 @@ S="${WORKDIR}/${MY_PV}"
 src_unpack() {
 	unpack "awoken_by_alecive-d2pdw32.zip"
 	cd "${S}" || die
-	tar -xzf "${MY_PN}.tar.gz" || die
+	for MY_SET in $MY_SETS; do
+		tar -xzf "${MY_SET}.tar.gz" || die
+	done
 }
 
 src_prepare() {
 	cd "${S}" || die
-	chown -R root:root "${MY_PN}" || die
+	for MY_SET in $MY_SETS; do
+		chown -R root:root "${MY_SET}" || die
+	done
 	cd "${S}/${MY_PN}" || die
-	epatch "${FILESDIR}/awoken-docfix.patch"
+	epatch "${FILESDIR}/awoken-scripts.patch"
 }
 
-get_symlink_dest() {
+awoken_symlink_dest() {
 	F=$(file -b $1)
 	echo $F | egrep -q '^broken'
 	if [ $? -eq 0 ]; then
@@ -51,32 +55,43 @@ get_symlink_dest() {
 	fi
 }
 
-src_install() {
-	dodir "/usr/share/icons"
-	dobin "${MY_PN}/awoken-icon-theme-customization"
-	dobin "${MY_PN}/awoken-icon-theme-customization-clear"
-	dodoc "${MY_PN}/Installation_and_Instructions.pdf"
+awoken_install_iconset() {
+	MY_SET="$1"
+	MY_DEST="/usr/share/icons/${MY_SET}"
 
 	dodir "${MY_DEST}"
 	insinto "${MY_DEST}"
-	doins "${MY_PN}/index.theme"
+	doins "${MY_SET}/index.theme"
 
-	cd "${S}/${MY_PN}"
+	cd "${S}/${MY_SET}"
 	find {clear,extra} -type d | sed 's|\./||' | while read DIR; do
 		dodir "${MY_DEST}/${DIR}"
 	done
 
-	cd "${S}/${MY_PN}"
+	cd "${S}/${MY_SET}"
 	find {clear,extra} -type f | sed 's|\./||' | while read FILE; do
 		MY_DIR=$(dirname $FILE)
 		insinto "${MY_DEST}/${MY_DIR}"
 		doins ${FILE}
 	done
 
-	cd "${S}/${MY_PN}"
+	cd "${S}/${MY_SET}"
 	find {clear,extra} -type l | sed 's|\./||' | while read LINK; do
-		MY_FILE=$(get_symlink_dest $LINK)
+		MY_FILE=$(awoken_symlink_dest $LINK)
 		dosym ${MY_FILE} "${MY_DEST}/${LINK}"
+	done
+}
+
+src_install() {
+	dodir "/usr/share/icons"
+	dobin "${MY_PN}/awoken-icon-theme-customization"
+	dodoc "${MY_PN}/Installation_and_Instructions.pdf"
+
+	for MY_SET in $MY_SETS; do
+		cd "${S}"
+		MY_SFX=$(echo $MY_SET | sed -e "s/^${MY_PN}//" -e 's/\(.*\)/\L\1/' -e 's/^$/clear/')
+		dobin "${MY_SET}/awoken-icon-theme-customization-${MY_SFX}"
+		awoken_install_iconset "${MY_SET}"
 	done
 }
 
