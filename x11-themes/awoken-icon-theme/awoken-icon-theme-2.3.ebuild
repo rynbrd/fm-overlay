@@ -8,10 +8,10 @@ inherit eutils
 MY_PN="AwOken"
 MY_PV="AwOken-2.3"
 DESCRIPTION="AwOken Icon Theme"
-HOMEPAGE=""
+HOMEPAGE="http://alecive.deviantart.com/art/AwOken-163570862"
 SRC_URI="http://www.deviantart.com/download/163570862/awoken_by_alecive-d2pdw32.zip"
 
-LICENSE=""
+LICENSE="CCPL-Attribution-ShareAlike-NonCommercial-3.0"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
@@ -21,14 +21,15 @@ RDEPEND="${DEPEND}"
 
 RESTRICT="binchecks strip"
 
-S=${WORKDIR}
+S="${WORKDIR}/${MY_PV}"
 
-src_unpack {
-	unpack ${A}
-	unpack "${WORKDIR}/${MY_PV}/${MY_PN}.tar.gz"
+src_unpack() {
+	unpack "awoken_by_alecive-d2pdw32.zip"
+	cd "${WORKDIR}"
+	unpack "${MY_PV}/${MY_PN}.tar.gz"
 }
 
-src_install {
+src_install() {
 	dobin "${MY_PN}/awoken-icon-theme-customization"
 	dobin "${MY_PN}/awoken-icon-theme-customization-clear"
 	dodoc "${MY_PN}/Installation_and_Instructions.pdf"
