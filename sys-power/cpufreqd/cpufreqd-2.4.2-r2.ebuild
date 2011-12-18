@@ -27,6 +27,7 @@ DEPEND="sys-apps/sed
 src_prepare() {
 	epatch "${FILESDIR}"/power_now.patch
 	epatch "${FILESDIR}"/${PN}-conf.d.patch
+	epatch "${FILESDIR}"/${P}-PATH_MAX.patch #318287
 
 	if use nvidia; then
 		cd "${WORKDIR}"/nvclock${NVCLOCK_VERSION}
