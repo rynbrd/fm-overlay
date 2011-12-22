@@ -1,6 +1,6 @@
 diff -urN a/customize.py b/customize.py
 --- a/customize.py	2011-04-12 20:27:06.000000000 -0500
-+++ b/customize.py	2011-12-22 08:08:17.925139573 -0600
++++ b/customize.py	2011-12-22 08:29:14.653139570 -0600
 @@ -20,6 +20,9 @@
  
  _filename = os.path.basename(sys.argv[0])
@@ -20,7 +20,6 @@ diff -urN a/customize.py b/customize.py
 +		sysdir = '%s/%s' % (_systhemedir, _themename)
 +
 +		if os.path.exists(userdir):
-+			print "Removing %s" % userdir
 +			shutil.rmtree(userdir)
 +
 +		if not os.path.exists(_themedir):
@@ -36,6 +35,7 @@ diff -urN a/customize.py b/customize.py
 +		os.mkdir(usergtkdir)
 +		shutil.copy("%s/gtkrc" % sysgtkdir, usergtkdir)
 +		shutil.copytree("%s/Styles" % sysgtkdir, "%s/Styles" % usergtkdir)
++		shutil.rmtree("%s/Styles/RES" % usergtkdir)
 +		for link in gtklinks:
 +			os.symlink("%s/%s" % (sysgtkdir, link), "%s/%s" % (usergtkdir, link))
 +
