@@ -69,7 +69,8 @@ awoken_install_iconset() {
 
 	cd "$MY_S" || die
 	cp -rf "${MY_S}"/{clear,extra} "${D}/${MY_D}" || die
-	chmod -R u+rwX,g+rX-w,o+rX-w "${MY_S}"/{clear,extra} || die
+	chmod -R u+rwX,g+rX-w,o+rX-w "${D}/${MY_D}"/{clear,extra} || die
+	chmod +x $(find "${D}/${MY_D}"/extra -name '*sh')
 
 	# Add missing symlinks for firefox-bin and thunderbird-bin.
 	dosym "firefox.png" "${MY_D}/clear/24x24/apps/firefox-bin-icon.png"

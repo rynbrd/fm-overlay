@@ -1,6 +1,6 @@
 diff -urN a/AwOken/awoken-icon-theme-customization b/AwOken/awoken-icon-theme-customization
 --- a/AwOken/awoken-icon-theme-customization	2011-10-27 12:13:46.000000000 -0500
-+++ b/AwOken/awoken-icon-theme-customization	2011-12-20 18:46:12.862035440 -0600
++++ b/AwOken/awoken-icon-theme-customization	2011-12-22 09:11:12.279000144 -0600
 @@ -14,6 +14,10 @@
  CONFDIR="$HOME/.icons"
  # Path for the ppa installation:
@@ -63,11 +63,9 @@ diff -urN a/AwOken/awoken-icon-theme-customization b/AwOken/awoken-icon-theme-cu
  		  else
  			echo "Sorry, I cannot find the file, or xdg-open doesn't exist on your pc."
  		  fi
-Binary files a/AwOken/extra/.common.sh.swp and b/AwOken/extra/.common.sh.swp differ
-Binary files a/AwOken/extra/.test.sh.swp and b/AwOken/extra/.test.sh.swp differ
 diff -urN a/AwOken/extra/common.sh b/AwOken/extra/common.sh
 --- a/AwOken/extra/common.sh	1969-12-31 18:00:00.000000000 -0600
-+++ b/AwOken/extra/common.sh	2011-12-21 04:57:46.922141964 -0600
++++ b/AwOken/extra/common.sh	2011-12-22 09:11:12.279000144 -0600
 @@ -0,0 +1,36 @@
 +#!/bin/sh
 +
@@ -107,7 +105,7 @@ diff -urN a/AwOken/extra/common.sh b/AwOken/extra/common.sh
 +
 diff -urN a/AwOken/extra/configure.sh b/AwOken/extra/configure.sh
 --- a/AwOken/extra/configure.sh	2011-10-27 12:13:46.000000000 -0500
-+++ b/AwOken/extra/configure.sh	2011-12-20 19:35:59.396792001 -0600
++++ b/AwOken/extra/configure.sh	2011-12-22 09:11:12.280000125 -0600
 @@ -5,6 +5,14 @@
  VER="2.3"
  ICNST="AwOken"
@@ -241,7 +239,7 @@ diff -urN a/AwOken/extra/configure.sh b/AwOken/extra/configure.sh
  done
 diff -urN a/AwOken/extra/configurez.sh b/AwOken/extra/configurez.sh
 --- a/AwOken/extra/configurez.sh	2011-10-27 12:13:46.000000000 -0500
-+++ b/AwOken/extra/configurez.sh	2011-12-20 19:39:00.620792001 -0600
++++ b/AwOken/extra/configurez.sh	2011-12-22 09:11:12.280000125 -0600
 @@ -5,6 +5,14 @@
  VER="2.3"
  ICNST="AwOken"
@@ -396,7 +394,7 @@ diff -urN a/AwOken/extra/configurez.sh b/AwOken/extra/configurez.sh
  #                                    END                                    #
 diff -urN a/AwOken/extra/customize.sh b/AwOken/extra/customize.sh
 --- a/AwOken/extra/customize.sh	2011-10-22 09:26:42.000000000 -0500
-+++ b/AwOken/extra/customize.sh	2011-12-20 18:46:36.335035441 -0600
++++ b/AwOken/extra/customize.sh	2011-12-22 09:11:12.281000106 -0600
 @@ -315,8 +315,10 @@
  	changefolder $FOLDERTYPE $FOLDERSUBTYPE $ICONSET $ICONSDIR
    
@@ -412,7 +410,7 @@ diff -urN a/AwOken/extra/customize.sh b/AwOken/extra/customize.sh
  exit
 diff -urN a/AwOken/extra/recover.sh b/AwOken/extra/recover.sh
 --- a/AwOken/extra/recover.sh	2011-11-01 05:21:30.000000000 -0500
-+++ b/AwOken/extra/recover.sh	2011-12-20 19:06:16.335507001 -0600
++++ b/AwOken/extra/recover.sh	2011-12-22 09:11:12.281000106 -0600
 @@ -16,7 +16,7 @@
  else
  	cd ../
@@ -422,19 +420,9 @@ diff -urN a/AwOken/extra/recover.sh b/AwOken/extra/recover.sh
  fi
  
  echo ""
-diff -urN a/AwOken/extra/test.sh b/AwOken/extra/test.sh
---- a/AwOken/extra/test.sh	1969-12-31 18:00:00.000000000 -0600
-+++ b/AwOken/extra/test.sh	2011-12-21 04:58:59.534141963 -0600
-@@ -0,0 +1,6 @@
-+#!/bin/sh
-+
-+source "$(dirname $0)/common.sh"
-+
-+open /usr/share/icons/AwOken/clear/128x128/apps
-+
 diff -urN a/AwOkenDark/extra/configure.sh b/AwOkenDark/extra/configure.sh
 --- a/AwOkenDark/extra/configure.sh	2011-11-01 05:22:01.000000000 -0500
-+++ b/AwOkenDark/extra/configure.sh	2011-12-20 19:49:17.738792008 -0600
++++ b/AwOkenDark/extra/configure.sh	2011-12-22 09:11:12.282000091 -0600
 @@ -5,6 +5,12 @@
  VER="2.3"
  ICNST="AwOkenDark"
@@ -550,7 +538,7 @@ diff -urN a/AwOkenDark/extra/configure.sh b/AwOkenDark/extra/configure.sh
  done
 diff -urN a/AwOkenDark/extra/configurez.sh b/AwOkenDark/extra/configurez.sh
 --- a/AwOkenDark/extra/configurez.sh	2011-11-01 05:22:01.000000000 -0500
-+++ b/AwOkenDark/extra/configurez.sh	2011-12-21 04:41:52.375141962 -0600
++++ b/AwOkenDark/extra/configurez.sh	2011-12-22 09:11:12.282000091 -0600
 @@ -5,6 +5,12 @@
  VER="2.3"
  ICNST="AwOkenDark"
@@ -688,7 +676,7 @@ diff -urN a/AwOkenDark/extra/configurez.sh b/AwOkenDark/extra/configurez.sh
  #                                    END                                    #
 diff -urN a/AwOkenDark/extra/customize.sh b/AwOkenDark/extra/customize.sh
 --- a/AwOkenDark/extra/customize.sh	2011-11-01 05:22:01.000000000 -0500
-+++ b/AwOkenDark/extra/customize.sh	2011-12-21 04:48:09.120141963 -0600
++++ b/AwOkenDark/extra/customize.sh	2011-12-22 09:11:12.283000078 -0600
 @@ -315,8 +315,10 @@
  	changefolder $FOLDERTYPE $FOLDERSUBTYPE $ICONSET $ICONSDIR
    
@@ -704,7 +692,7 @@ diff -urN a/AwOkenDark/extra/customize.sh b/AwOkenDark/extra/customize.sh
  exit
 diff -urN a/AwOkenWhite/extra/configure.sh b/AwOkenWhite/extra/configure.sh
 --- a/AwOkenWhite/extra/configure.sh	2011-11-01 05:17:59.000000000 -0500
-+++ b/AwOkenWhite/extra/configure.sh	2011-12-21 04:45:20.060141964 -0600
++++ b/AwOkenWhite/extra/configure.sh	2011-12-22 09:11:12.283000078 -0600
 @@ -5,6 +5,12 @@
  VER="2.3"
  ICNST="AwOkenWhite"
@@ -820,7 +808,7 @@ diff -urN a/AwOkenWhite/extra/configure.sh b/AwOkenWhite/extra/configure.sh
  done
 diff -urN a/AwOkenWhite/extra/configurez.sh b/AwOkenWhite/extra/configurez.sh
 --- a/AwOkenWhite/extra/configurez.sh	2011-11-01 05:17:59.000000000 -0500
-+++ b/AwOkenWhite/extra/configurez.sh	2011-12-21 04:47:18.646141962 -0600
++++ b/AwOkenWhite/extra/configurez.sh	2011-12-22 09:11:12.284000071 -0600
 @@ -5,6 +5,12 @@
  VER="2.3"
  ICNST="AwOkenWhite"
@@ -958,7 +946,7 @@ diff -urN a/AwOkenWhite/extra/configurez.sh b/AwOkenWhite/extra/configurez.sh
  #                                    END                                    #
 diff -urN a/AwOkenWhite/extra/customize.sh b/AwOkenWhite/extra/customize.sh
 --- a/AwOkenWhite/extra/customize.sh	2011-11-01 05:17:59.000000000 -0500
-+++ b/AwOkenWhite/extra/customize.sh	2011-12-21 04:48:34.180141964 -0600
++++ b/AwOkenWhite/extra/customize.sh	2011-12-22 09:11:12.284000071 -0600
 @@ -315,8 +315,10 @@
  	changefolder $FOLDERTYPE $FOLDERSUBTYPE $ICONSET $ICONSDIR
    
