@@ -41,5 +41,5 @@ src_prepare() {
 src_install() {
 	dodir "/usr/share/themes"
 	cp -rf "${S}/A-New-Hope" "${D}/usr/share/themes/"
-	dosym "/usr/share/themes/A-New-Hope/customise.py" "/usr/bin/a-new-hope-customise"
+	dosym "/usr/share/themes/A-New-Hope/customise.py" "/usr/bin/a-new-hope-customize"
 }
