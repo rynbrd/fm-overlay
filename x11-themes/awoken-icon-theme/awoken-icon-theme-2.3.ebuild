@@ -16,7 +16,7 @@ SRC_URI="http://www.deviantart.com/download/163570862/${MY_PKG}"
 
 LICENSE="CCPL-Attribution-ShareAlike-NonCommercial-3.0"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="app-arch/unzip"
