@@ -1,0 +1,26 @@
+--- a/theme.ini	2010-12-27 18:04:42.000000000 -0600
++++ b/theme.ini	2011-12-22 05:12:32.916675002 -0600
+@@ -445,7 +445,7 @@
+ 
+ [borders]
+ top=2
+-bottom=8
++bottom=4
+ left=4
+ right=4
+ 
+@@ -458,7 +458,7 @@
+ inactive_text_alpha=0.90000000000000002
+ inactive_text_halo=#3d3d3d
+ inactive_text_halo_alpha=1
+-titlebar_font=Sans Bold 9
++titlebar_font=DejaVu Sans Bold 8
+ min_titlebar_height=26
+ title_object_layout=(4)T::(25)N(6)X(6)C
+ 
+@@ -467,4 +467,4 @@
+ description=Based on "Divergence IV - A New Hope" by jurialmunkey.  Buttons based on the Shiki metacity theme.
+ theme_version=0.4
+ suggested=Divergence - A New Hope, Ambiance, Equinox Ambient
+-version=0.7.2
++version=0.8.4
