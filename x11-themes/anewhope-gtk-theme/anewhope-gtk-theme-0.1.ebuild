@@ -3,6 +3,7 @@
 # $Header: $
 
 EAPI=3
+inherit eutils
 
 MY_PKG="divergence_iv_____a_new_hope___by_jurialmunkey-d316eqx.zip"
 
@@ -21,9 +22,14 @@ RDEPEND="${DEPEND}
 	dev-lang/python
 	dev-python/pygtk"
 
+RESTRICT="binchecks strip"
+
+S="${WORKDIR}"
+
 src_unpack() {
 	unpack "$MY_PKG"
-	unpack "A-New-Hope.tar.gz"
+	cd "$S" || die
+	tar -xzf "A-New-Hope.tar.gz"
 }
 
 src_prepare() {
@@ -35,4 +41,5 @@ src_prepare() {
 src_install() {
 	dodir "/usr/share/themes"
 	cp -rf "${S}/A-New-Hope" "${D}/usr/share/themes/"
+	dosym "/usr/share/themes/A-New-Hope/customise.py" "/usr/bin/a-new-hope-customise"
 }
