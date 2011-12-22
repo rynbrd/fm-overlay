@@ -57,37 +57,25 @@ awoken_symlink_dest() {
 
 awoken_install_iconset() {
 	MY_SET="$1"
-	MY_DEST="/usr/share/icons/${MY_SET}"
+	MY_S="${S}/${MY_SET}"
+	MY_D="/usr/share/icons/${MY_SET}"
 	MY_SFX=$(echo "$MY_SET" | sed -e "s/^${MY_PN}//" -e 's/\(.*\)/\L\1/' -e 's/^$/clear/')
 
 	cd "$S" || die
-
 	dobin "${MY_SET}/awoken-icon-theme-customization-${MY_SFX}"
-	dodir "$MY_DEST"
-	insinto "$MY_DEST"
+	dodir "$MY_D"
+	insinto "$MY_D"
 	doins "${MY_SET}/index.theme"
 
-	cd "${S}/${MY_SET}" || die
-	find {clear,extra} -type d | sed 's|\./||' | while read DIR; do
-		dodir "${MY_DEST}/${DIR}"
-	done
-
-	find {clear,extra} -type f | sed 's|\./||' | while read FILE; do
-		MY_DIR="$(dirname "$FILE")"
-		insinto "${MY_DEST}/${MY_DIR}"
-		doins "$FILE"
-	done
-
-	find {clear,extra} -type l | sed 's|\./||' | while read LINK; do
-		MY_FILE="$(awoken_symlink_dest "$LINK")"
-		dosym "$MY_FILE" "${MY_DEST}/${LINK}"
-	done
+	cd "$MY_S" || die
+	cp -rf "${MY_S}"/{clear,extra} "${D}/${MY_D}" || die
+	chmod -R u+rwX,g+rX-w,o+rX-w "${MY_S}"/{clear,extra} || die
 
 	# Add missing symlinks for firefox-bin and thunderbird-bin.
-	dosym firefox.png "${MY_DEST}/clear/24x24/apps/firefox-bin-icon.png"
-	dosym firefox.png "${MY_DEST}/clear/128x128/apps/firefox-bin-icon.png"
-	dosym thunderbird.png "${MY_DEST}/clear/24x24/apps/thunderbird-bin-icon.png"
-	dosym thunderbird.png "${MY_DEST}/clear/128x128/apps/thunderbird-bin-icon.png"
+	dosym "firefox.png" "${MY_D}/clear/24x24/apps/firefox-bin-icon.png"
+	dosym "firefox.png" "${MY_D}/clear/128x128/apps/firefox-bin-icon.png"
+	dosym "thunderbird.png" "${MY_D}/clear/24x24/apps/thunderbird-bin-icon.png"
+	dosym "thunderbird.png" "${MY_D}/clear/128x128/apps/thunderbird-bin-icon.png"
 }
 
 src_install() {
@@ -96,9 +84,6 @@ src_install() {
 	dodoc "${MY_PN}/Installation_and_Instructions.pdf"
 
 	for MY_SET in $MY_SETS; do
-		cd "$S" || die
-		MY_SFX=$(echo "$MY_SET" | sed -e "s/^${MY_PN}//" -e 's/\(.*\)/\L\1/' -e 's/^$/clear/')
-		dobin "${MY_SET}/awoken-icon-theme-customization-${MY_SFX}"
 		awoken_install_iconset "$MY_SET"
 	done
 }
