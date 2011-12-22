@@ -1,6 +1,6 @@
-diff -urN a/customise.py b/customise.py
---- a/customise.py	2011-04-12 20:27:06.000000000 -0500
-+++ b/customise.py	2011-12-22 08:08:17.925139573 -0600
+diff -urN a/customize.py b/customize.py
+--- a/customize.py	2011-04-12 20:27:06.000000000 -0500
++++ b/customize.py	2011-12-22 08:08:17.925139573 -0600
 @@ -20,6 +20,9 @@
  
  _filename = os.path.basename(sys.argv[0])
