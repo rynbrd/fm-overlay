@@ -1,0 +1,22 @@
+Binary files a/pixmaps.active_bottom.png and b/pixmaps.active_bottom.png differ
+diff -urN a/theme.ini b/theme.ini
+--- a/theme.ini	2011-12-23 01:46:53.397025999 -0600
++++ b/theme.ini	2011-12-23 01:39:18.538025995 -0600
+@@ -445,7 +445,7 @@
+ 
+ [borders]
+ top=2
+-bottom=8
++bottom=4
+ left=4
+ right=4
+ 
+@@ -458,7 +458,7 @@
+ inactive_text_alpha=0.59999999999999998
+ inactive_text_halo=#3d3d3d
+ inactive_text_halo_alpha=0
+-titlebar_font=Sans Bold 9
++titlebar_font=Sans Bold 8
+ min_titlebar_height=30
+ title_object_layout=(6)T::(10)NR(3)C(2)
+ 
