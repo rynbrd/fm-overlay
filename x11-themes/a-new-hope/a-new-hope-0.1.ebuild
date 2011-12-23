@@ -28,7 +28,7 @@ RESTRICT="binchecks strip"
 S="${WORKDIR}"
 
 emerald_theme_install() {
-	NAME=$(echo "$1" | sed "s/\.emerald$//g")
+	NAME=$(basename "$1" | sed "s/\.emerald$//g")
 	MY_D="/usr/share/emerald/themes/${NAME}"
 	dodir "$MY_D"
 	tar -xzf "$1" -C "${D}/${MY_D}" || die
