@@ -32,18 +32,6 @@ DEPEND="${RDEPEND}
 	gconf? ( gnome-base/gconf:2 )
 "
 
-src_prepare() {
-	if ! use gconf; then
-		epatch "${FILESDIR}"/${PN}-no-gconf.patch
-	fi
-
-	epatch "${FILESDIR}/${P}-libnotify.patch"
-
-	# required to apply the above patch
-	intltoolize --copy --force || die "intltoolize failed"
-	eautoreconf || die "eautoreconf failed"
-}
-
 src_configure() {
 	econf \
 		--disable-dependency-tracking \
