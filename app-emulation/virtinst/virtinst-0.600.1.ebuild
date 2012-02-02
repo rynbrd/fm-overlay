@@ -23,7 +23,7 @@ if [[ ${PV} = *9999* ]]; then
 else
 	SRC_URI="http://virt-manager.et.redhat.com/download/sources/${PN}/${P}.tar.gz
 		${BACKPORTS:+mirror://gentoo/${P}-backports-${BACKPORTS}.tar.bz2}"
-	KEYWORDS="amd64 x86"
+	KEYWORDS="~amd64 ~x86"
 fi
 
 DESCRIPTION="Python modules for starting virtualized guest installations"
