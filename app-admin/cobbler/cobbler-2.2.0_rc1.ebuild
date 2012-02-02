@@ -1,19 +1,15 @@
-#
-# Copyright (C) 2008-2010 Stefan Knoblich <s.knoblich@axsentis.de>
-#
-# Distributed under the terms of the GNU General Public License 2
-# see http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt for
-# more information
-#
+# Copyright 1999-2012 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
-EAPI="2"
+EAPI=3
 
 inherit autotools python git-2
 
 DESCRIPTION="Cobbler Install/Update Server"
 HOMEPAGE="http://cobbler.github.com/"
 
-EGIT_REPO_URI="git://git.freeswitch.org/freeswitch.git"
+EGIT_REPO_URI="git://github.com/cobbler/cobbler.git"
 EGIT_COMMIT="eb89d3256f746b4d3ae0eba43e9d2672e682357b"
 
 LICENSE="GPL-2"
@@ -28,11 +24,10 @@ RDEPEND="dev-lang/python
 DEPEND="${RDEPEND}
 	sys-devel/automake"
 
-src_prepare() {
-	sed -e 's|chown -R apache /usr/share/cobbler/web||' -i Makefile || die "patching Makefile failed"
-	sed -e "s|install_data=/usr/share/cobbler/|install_data=${D}/usr/share/cobbler/|" -i setup.cfg || die "patching setup.cfg failed"
+src_compile() {
+	emake build || die "make build failed"
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "make install failed"
+	emake DESTDIR="${D}" debinstall || die "make debinstall failed"
 }
