@@ -17,7 +17,7 @@ EGIT_REPO_URI="git://git.freeswitch.org/freeswitch.git"
 EGIT_COMMIT="eb89d3256f746b4d3ae0eba43e9d2672e682357b"
 
 LICENSE="GPL-2"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 SLOT="0"
 
 IUSE=""
