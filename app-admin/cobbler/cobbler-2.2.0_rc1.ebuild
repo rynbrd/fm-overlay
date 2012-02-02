@@ -8,7 +8,7 @@
 
 EAPI="2"
 
-inherit autotools python git
+inherit autotools python git-2
 
 DESCRIPTION="Cobbler Install/Update Server"
 HOMEPAGE="http://cobbler.github.com/"
@@ -29,7 +29,8 @@ DEPEND="${RDEPEND}
 	sys-devel/automake"
 
 src_prepare() {
-	sed -e 's|chown -R apache /usr/share/cobbler/web||' -i Makefile
+	sed -e 's|chown -R apache /usr/share/cobbler/web||' -i Makefile || die "patching Makefile failed"
+	sed -e "s|install_data=/usr/share/cobbler/|install_data=${D}/usr/share/cobbler/|" -i setup.cfg || die "patching setup.cfg failed"
 }
 
 src_install() {
