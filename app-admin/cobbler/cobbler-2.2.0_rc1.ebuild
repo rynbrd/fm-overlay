@@ -20,7 +20,8 @@ IUSE=""
 
 RDEPEND="dev-lang/python
 	dev-python/pyyaml
-	dev-python/urlgrabber"
+	dev-python/urlgrabber
+	dev-python/simplejson"
 
 DEPEND="${RDEPEND}
 	sys-devel/automake"
