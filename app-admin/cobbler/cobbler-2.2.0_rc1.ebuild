@@ -19,7 +19,8 @@ SLOT="0"
 IUSE=""
 
 RDEPEND="dev-lang/python
-	dev-python/pyyaml"
+	dev-python/pyyaml
+	dev-python/urlgrabber"
 
 DEPEND="${RDEPEND}
 	sys-devel/automake"
