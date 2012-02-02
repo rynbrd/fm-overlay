@@ -22,6 +22,7 @@ RDEPEND="dev-lang/python
 	dev-python/pyyaml
 	dev-python/urlgrabber
 	dev-python/simplejson
+	dev-python/netaddr
 	app-emulation/virtinst
 	app-arch/rpm"
 
