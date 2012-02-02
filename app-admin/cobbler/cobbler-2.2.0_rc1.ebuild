@@ -22,7 +22,7 @@ RDEPEND="dev-lang/python
 	dev-python/pyyaml
 	dev-python/urlgrabber
 	dev-python/simplejson
-	app-emulation/virtinst"
+	app-emulation/virtinst[python]"
 
 DEPEND="${RDEPEND}
 	sys-devel/automake"
