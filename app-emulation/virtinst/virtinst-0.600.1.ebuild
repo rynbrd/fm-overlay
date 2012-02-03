@@ -43,5 +43,6 @@ src_prepare() {
 		EPATCH_FORCE=yes EPATCH_SUFFIX="patch" EPATCH_SOURCE="${S}/patches" \
 		epatch
 	epatch "${FILESDIR}/${PV}-debarch.patch"
+	epatch "${FILESDIR}/${PV}-tmpkernel.patch"
 	distutils_src_prepare
 }

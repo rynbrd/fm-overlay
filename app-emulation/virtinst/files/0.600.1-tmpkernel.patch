@@ -1,0 +1,35 @@
+--- a/virtinst/DistroInstaller.py	2012-01-31 14:40:57.000000000 -0600
++++ b/virtinst/DistroInstaller.py	2012-02-02 18:01:55.412126018 -0600
+@@ -367,7 +367,7 @@
+                                                 self.location, meter,
+                                                 self.scratchdir,
+                                                 self.os_type)
+-        (kernelfn, initrdfn, args) = media
++        (kernelfn_tmp, initrdfn_tmp, args) = media
+ 
+         if guest.get_os_autodetect():
+             if os_type:
+@@ -378,16 +378,17 @@
+                 logging.debug("Auto detected OS variant as: %s", os_variant)
+                 guest.os_variant = os_variant
+ 
+-        self._tmpfiles.append(kernelfn)
+-        if initrdfn:
+-            self._tmpfiles.append(initrdfn)
+-
+         if self._initrd_injections:
+-            self._perform_initrd_injections(initrdfn)
++            self._perform_initrd_injections(initrdfn_tmp)
+ 
+         # If required, upload media to an accessible guest location
+         kernelfn, initrdfn = self._upload_media(guest, meter,
+-                                                kernelfn, initrdfn)
++                                                kernelfn_tmp, initrdfn_tmp)
++
++        if kernelfn != kernelfn_tmp:
++            self._tmpfiles.append(kernelfn)
++        if initrdfn_tmp and initrdfn != initrdfn_tmp:
++            self._tmpfiles.append(initrdfn_tmp)
+ 
+         self._install_bootconfig.kernel = kernelfn
+         self._install_bootconfig.initrd = initrdfn
