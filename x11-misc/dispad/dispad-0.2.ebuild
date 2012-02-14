@@ -23,7 +23,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	eautoreconf
+	eautoreconf -i
 }
 
 src_install() {
