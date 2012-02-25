@@ -32,6 +32,10 @@ DEPEND="${RDEPEND}
 	gconf? ( gnome-base/gconf:2 )
 "
 
+src_prepare() {
+	epatch ${FILESDIR}/${PV}-nofify-fix.patch
+}
+
 src_configure() {
 	econf \
 		--disable-dependency-tracking \
