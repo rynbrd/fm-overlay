@@ -11,15 +11,15 @@ Installation
 
 Check out this repository to some place convenient:
 
-  git clone git://github.com/BlueDragonX/fm-overlay.git fm
+    git clone git://github.com/BlueDragonX/fm-overlay.git fm
 
 Include the overlay make.conf in your main make.conf:
 
-  include /path/to/overlays/fm/make.conf
+    include /path/to/overlays/fm/make.conf
 
 Rebuild the eix cache, if applicable:
 
-  eix-update
+    sudo eix-update
 
 License
 -------
