@@ -34,6 +34,7 @@ src_configure() {
 }
 
 src_install() {
+	addpredict "/etc/compizconfig"
 	cmake-utils_src_install
 
 	# Install the FindCompizConfig.cmake file
