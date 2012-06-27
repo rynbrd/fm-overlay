@@ -9,13 +9,14 @@ SRC_URI=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="gnome kde unsupported"
+IUSE="emerald gnome kde unsupported"
 
 RDEPEND="
 	>=x11-wm/compiz-${PV}
 	>=x11-plugins/compiz-plugins-main-${PV}
 	>=x11-plugins/compiz-plugins-extra-${PV}
 	>=x11-apps/ccsm-${PV}
+	emerald? ( >=x11-wm/emerald-${MY_PV} )
 	gnome? ( >=x11-libs/compizconfig-backend-gconf-${PV} )
 	kde? ( >=x11-libs/compizconfig-backend-kconfig4-${PV} )
 	unsupported? ( >=x11-plugins/compiz-plugins-unsupported-${PV} )
