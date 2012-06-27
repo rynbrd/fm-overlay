@@ -32,7 +32,8 @@ DEPEND="${RDEPEND}
 "
 
 src_configure() {
-	./autogen.sh \
+	./autogen.sh
+	econf \
 		--disable-dependency-tracking \
 		--disable-static \
 		--enable-fast-install \
