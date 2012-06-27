@@ -9,12 +9,10 @@ MY_P="${MY_PN}-${PV}"
 
 if [[ ${PV} != *9999* ]]; then
 	SRC_URI="http://releases.compiz.org/${PV}/${MY_P}.tar.bz2"
-	KEYWORDS="~x86 ~amd64"
 else
 	GIT_ECLASS="git"
 	EGIT_REPO_URI="git://anongit.compiz-fusion.org/${PN}/core"
 	SRC_URI=""
-	KEYWORDS=""
 fi
 
 inherit cmake-utils eutils ${GIT_ECLASS} gnome2-utils
@@ -24,6 +22,7 @@ HOMEPAGE="http://www.compiz.org/"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0"
+KEYWORDS="~x86 ~amd64"
 IUSE="gnome gtk kde +svg"
 
 COMMONDEPEND="

@@ -6,13 +6,11 @@ EAPI="3"
 
 if [[ ${PV} != *9999* ]]; then
 	SRC_URI="http://releases.compiz.org/${PV}/${P}.tar.bz2"
-	KEYWORDS="~x86 ~amd64"
 else
 	EGIT_HAS_SUBMODULES=true
 	GIT_ECLASS="git"
 	EGIT_REPO_URI="git://anongit.compiz.org/compiz/plugins-extra"
 	SRC_URI=""
-	KEYWORDS=""
 fi
 
 inherit cmake-utils ${GIT_ECLASS}
@@ -22,6 +20,7 @@ HOMEPAGE="http://www.compiz.org/"
 
 LICENSE="GPL-2"
 SLOT="0"
+KEYWORDS="~x86 ~amd64"
 IUSE="gnome"
 
 RDEPEND="
