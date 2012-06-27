@@ -24,7 +24,7 @@ Rebuild the eix cache, if applicable:
 License
 -------
 
-* Copyright (C) 2012 Ryan Bourgeois <bluedragonx@gmail.com>
+Copyright (C) 2012 Ryan Bourgeois <bluedragonx@gmail.com>
 
 The contents of this repository are licensed under the [GPLv2][1].
 
