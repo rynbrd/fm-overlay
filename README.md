@@ -21,6 +21,16 @@ Rebuild the eix cache, if applicable:
 
     sudo eix-update
 
+Scripts
+-------
+
+There are a few scripts I use regularly when managing this overlay. They take
+no arguments and operate on all ebuilds in subdirectories of the cwd. They are
+located at the root of the repo. They are:
+
+- **listpkgs** List the packages in the overlay.
+- **redigest** Regenerate Manifests for all the ebuilds.
+
 License
 -------
 
