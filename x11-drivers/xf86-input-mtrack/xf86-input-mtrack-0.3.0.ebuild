@@ -19,7 +19,7 @@ S="${WORKDIR}/BlueDragonX-xf86-input-mtrack-7977197"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 
 RDEPEND="${RDEPEND}
 	>=sys-libs/mtdev-1.0"
