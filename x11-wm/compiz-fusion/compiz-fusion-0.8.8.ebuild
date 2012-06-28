@@ -21,7 +21,7 @@ RDEPEND="
 	>=x11-apps/ccsm-${MY_PV}
 	emerald? ( >=x11-wm/emerald-${PV} )
 	gnome? ( >=x11-libs/compizconfig-backend-gconf-${PV} )
-	kde? ( >=x11-libs/compizconfig-backend-kconfig4-${MY_PV} )"
+	kde? ( >=x11-libs/compizconfig-backend-kconfig4-${PV} )"
 
 pkg_postinst() {
 	ewarn "If you want to try out simple-ccsm, you'll need to emerge it"
