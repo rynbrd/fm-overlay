@@ -1,3 +1,15 @@
+diff -urN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2012-06-28 18:51:14.737892849 -0500
++++ b/CMakeLists.txt	2012-06-28 19:54:32.611516021 -0500
+@@ -120,7 +120,7 @@
+ 
+ install (
+     FILES ${CMAKE_BINARY_DIR}/compiz.pc
+-    DESTINATION ${libdir}/pkgconfig
++    DESTINATION ${COMPIZ_DESTDIR}${libdir}/pkgconfig
+ )
+ 
+ # Build Google Test and make its headers known
 diff -urN a/cmake/base.cmake b/cmake/base.cmake
 --- a/cmake/base.cmake	2012-06-28 18:51:14.735892871 -0500
 +++ b/cmake/base.cmake	2012-06-28 19:37:20.621766538 -0500
