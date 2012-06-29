@@ -81,6 +81,7 @@ src_prepare() {
 	bzr_src_prepare
 
 	epatch "${FILESDIR}/${P}-fix_access_violation.patch"
+	epatch "${FILESDIR}/${P}-sandbox.patch"
 
 	echo "gtk/gnome/compiz-wm.desktop.in" >> "${S}/po/POTFILES.skip"
 	echo "metadata/core.xml.in" >> "${S}/po/POTFILES.skip"

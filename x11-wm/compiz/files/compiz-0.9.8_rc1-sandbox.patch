@@ -1,0 +1,141 @@
+diff -urN a/include/core/CMakeLists.txt b/include/core/CMakeLists.txt
+--- a/include/core/CMakeLists.txt	2012-06-28 18:51:14.736892860 -0500
++++ b/include/core/CMakeLists.txt	2012-06-28 18:58:50.338834177 -0500
+@@ -22,4 +22,4 @@
+     abiversion.h
+ )
+ 
+-install (FILES ${_headers} DESTINATION ${COMPIZ_CORE_INCLUDE_DIR})
++install (FILES ${_headers} DESTINATION ${COMPIZ_DESTDIR}${COMPIZ_CORE_INCLUDE_DIR})
+diff -urN a/src/logmessage/CMakeLists.txt b/src/logmessage/CMakeLists.txt
+--- a/src/logmessage/CMakeLists.txt	2012-06-28 18:51:14.742892794 -0500
++++ b/src/logmessage/CMakeLists.txt	2012-06-28 18:58:50.351834024 -0500
+@@ -30,4 +30,4 @@
+   PUBLIC_HEADER "${PUBLIC_HEADERS}"
+ )
+ 
+-install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_CORE_INCLUDE_DIR})
++install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_DESTDIR}${COMPIZ_CORE_INCLUDE_DIR})
+diff -urN a/src/pluginclasshandler/CMakeLists.txt b/src/pluginclasshandler/CMakeLists.txt
+--- a/src/pluginclasshandler/CMakeLists.txt	2012-06-28 18:51:14.743892783 -0500
++++ b/src/pluginclasshandler/CMakeLists.txt	2012-06-28 18:58:50.354833990 -0500
+@@ -43,4 +43,4 @@
+   PUBLIC_HEADER "${PUBLIC_HEADERS}"
+ )
+ 
+-install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_CORE_INCLUDE_DIR})
++install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_DESTDIR}${COMPIZ_CORE_INCLUDE_DIR})
+diff -urN a/src/point/CMakeLists.txt b/src/point/CMakeLists.txt
+--- a/src/point/CMakeLists.txt	2012-06-28 18:51:14.741892805 -0500
++++ b/src/point/CMakeLists.txt	2012-06-28 18:58:50.350834036 -0500
+@@ -52,7 +52,7 @@
+   PUBLIC_HEADER "${PUBLIC_HEADERS}"
+ )
+ 
+-install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_CORE_INCLUDE_DIR})
++install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_DESTDIR}${COMPIZ_CORE_INCLUDE_DIR})
+ 
+ TARGET_LINK_LIBRARIES( 
+   compiz_point
+diff -urN a/src/rect/CMakeLists.txt b/src/rect/CMakeLists.txt
+--- a/src/rect/CMakeLists.txt	2012-06-28 18:51:14.738892838 -0500
++++ b/src/rect/CMakeLists.txt	2012-06-28 18:58:50.340834153 -0500
+@@ -50,7 +50,7 @@
+   PUBLIC_HEADER "${PUBLIC_HEADERS}"
+ )
+ 
+-install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_CORE_INCLUDE_DIR})
++install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_DESTDIR}${COMPIZ_CORE_INCLUDE_DIR})
+ 
+ TARGET_LINK_LIBRARIES( 
+   compiz_rect
+diff -urN a/src/region/CMakeLists.txt b/src/region/CMakeLists.txt
+--- a/src/region/CMakeLists.txt	2012-06-28 18:51:14.740892816 -0500
++++ b/src/region/CMakeLists.txt	2012-06-28 18:58:50.346834084 -0500
+@@ -53,7 +53,7 @@
+   PUBLIC_HEADER "${PUBLIC_HEADERS}"
+ )
+ 
+-install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_CORE_INCLUDE_DIR})
++install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_DESTDIR}${COMPIZ_CORE_INCLUDE_DIR})
+ 
+ TARGET_LINK_LIBRARIES( 
+   compiz_region
+diff -urN a/src/servergrab/CMakeLists.txt b/src/servergrab/CMakeLists.txt
+--- a/src/servergrab/CMakeLists.txt	2012-06-28 18:51:14.740892816 -0500
++++ b/src/servergrab/CMakeLists.txt	2012-06-28 18:58:50.348834060 -0500
+@@ -39,4 +39,4 @@
+   PUBLIC_HEADER "${PUBLIC_HEADERS}"
+ )
+ 
+-install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_CORE_INCLUDE_DIR})
++install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_DESTDIR}${COMPIZ_CORE_INCLUDE_DIR})
+diff -urN a/src/string/CMakeLists.txt b/src/string/CMakeLists.txt
+--- a/src/string/CMakeLists.txt	2012-06-28 18:51:14.741892805 -0500
++++ b/src/string/CMakeLists.txt	2012-06-28 18:58:50.349834048 -0500
+@@ -28,4 +28,4 @@
+   PUBLIC_HEADER "${PUBLIC_HEADERS}"
+ )
+ 
+-install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_CORE_INCLUDE_DIR})
++install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_DESTDIR}${COMPIZ_CORE_INCLUDE_DIR})
+diff -urN a/src/timer/CMakeLists.txt b/src/timer/CMakeLists.txt
+--- a/src/timer/CMakeLists.txt	2012-06-28 18:51:14.742892794 -0500
++++ b/src/timer/CMakeLists.txt	2012-06-28 18:58:50.352834012 -0500
+@@ -55,7 +55,7 @@
+   PUBLIC_HEADER "${PUBLIC_HEADERS}"
+ )
+ 
+-install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_CORE_INCLUDE_DIR})
++install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_DESTDIR}${COMPIZ_CORE_INCLUDE_DIR})
+ 
+ TARGET_LINK_LIBRARIES( 
+   compiz_timer
+diff -urN a/src/window/constrainment/CMakeLists.txt b/src/window/constrainment/CMakeLists.txt
+--- a/src/window/constrainment/CMakeLists.txt	2012-06-28 18:51:14.738892838 -0500
++++ b/src/window/constrainment/CMakeLists.txt	2012-06-28 18:58:50.341834141 -0500
+@@ -53,7 +53,7 @@
+   PUBLIC_HEADER "${PUBLIC_HEADERS}"
+ )
+ 
+-install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_CORE_INCLUDE_DIR})
++install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_DESTDIR}${COMPIZ_CORE_INCLUDE_DIR})
+ 
+ TARGET_LINK_LIBRARIES( 
+   compiz_window_constrainment
+diff -urN a/src/window/extents/CMakeLists.txt b/src/window/extents/CMakeLists.txt
+--- a/src/window/extents/CMakeLists.txt	2012-06-28 18:51:14.739892827 -0500
++++ b/src/window/extents/CMakeLists.txt	2012-06-28 18:58:50.345834095 -0500
+@@ -51,7 +51,7 @@
+   PUBLIC_HEADER "${PUBLIC_HEADERS}"
+ )
+ 
+-install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_CORE_INCLUDE_DIR})
++install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_DESTDIR}${COMPIZ_CORE_INCLUDE_DIR})
+ 
+ TARGET_LINK_LIBRARIES( 
+   compiz_window_extents
+diff -urN a/src/window/geometry/CMakeLists.txt b/src/window/geometry/CMakeLists.txt
+--- a/src/window/geometry/CMakeLists.txt	2012-06-28 18:51:14.738892838 -0500
++++ b/src/window/geometry/CMakeLists.txt	2012-06-28 18:58:50.343834117 -0500
+@@ -51,7 +51,7 @@
+   PUBLIC_HEADER "${PUBLIC_HEADERS}"
+ )
+ 
+-install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_CORE_INCLUDE_DIR})
++install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_DESTDIR}${COMPIZ_CORE_INCLUDE_DIR})
+ 
+ TARGET_LINK_LIBRARIES( 
+   compiz_window_geometry
+diff -urN a/src/window/geometry-saver/CMakeLists.txt b/src/window/geometry-saver/CMakeLists.txt
+--- a/src/window/geometry-saver/CMakeLists.txt	2012-06-28 18:51:14.739892827 -0500
++++ b/src/window/geometry-saver/CMakeLists.txt	2012-06-28 18:58:50.344834106 -0500
+@@ -53,7 +53,7 @@
+   PUBLIC_HEADER "${PUBLIC_HEADERS}"
+ )
+ 
+-install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_CORE_INCLUDE_DIR})
++install (FILES ${PUBLIC_HEADERS} DESTINATION ${COMPIZ_DESTDIR}${COMPIZ_CORE_INCLUDE_DIR})
+ 
+ TARGET_LINK_LIBRARIES ( 
+   compiz_window_geometry_saver
