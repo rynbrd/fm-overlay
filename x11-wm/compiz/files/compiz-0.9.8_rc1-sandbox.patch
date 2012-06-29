@@ -13,7 +13,7 @@ diff -urN a/CMakeLists.txt b/CMakeLists.txt
 Binary files a/cmake/.base.cmake.swp and b/cmake/.base.cmake.swp differ
 diff -urN a/cmake/base.cmake b/cmake/base.cmake
 --- a/cmake/base.cmake	2012-06-28 18:51:14.735892871 -0500
-+++ b/cmake/base.cmake	2012-06-28 20:58:41.228748769 -0500
++++ b/cmake/base.cmake	2012-06-28 21:15:48.086474088 -0500
 @@ -51,10 +51,10 @@
      install (FILES
  	     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindCompiz.cmake
@@ -28,7 +28,7 @@ diff -urN a/cmake/base.cmake b/cmake/base.cmake
      )
      find_file (_find_compizconfig FindCompizConfig.cmake PATHS ${CMAKE_ROOT}/Modules ${ARGN})
      if (NOT _find_compizconfig)
-@@ -67,7 +67,7 @@
+@@ -67,11 +67,11 @@
      install (FILES
  	     ${CMAKE_CURRENT_SOURCE_DIR}/compizconfig/libcompizconfig/cmake/FindCompizConfig.cmake
  	     DESTINATION
@@ -36,7 +36,13 @@ diff -urN a/cmake/base.cmake b/cmake/base.cmake
 +	     ${COMPIZ_DESTDIR}${CMAKE_INSTALL_PREFIX}/share/cmake-${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}/)
      add_custom_target (
  	findcompizconfig_install
- 	${CMAKE_COMMAND} -E make_directory ${CMAKE_ROOT}/Modules &&
+-	${CMAKE_COMMAND} -E make_directory ${CMAKE_ROOT}/Modules &&
+-	${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/compizconfig/libcompizconfig/cmake/FindCompizConfig.cmake ${CMAKE_ROOT}/Modules
++	${CMAKE_COMMAND} -E make_directory ${COMPIZ_DESTDIR}${CMAKE_ROOT}/Modules &&
++	${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/compizconfig/libcompizconfig/cmake/FindCompizConfig.cmake ${COMPIZ_DESTDIR}${CMAKE_ROOT}/Modules
+     )
+ endfunction ()
+ 
 diff -urN a/include/core/CMakeLists.txt b/include/core/CMakeLists.txt
 --- a/include/core/CMakeLists.txt	2012-06-28 18:51:14.736892860 -0500
 +++ b/include/core/CMakeLists.txt	2012-06-28 18:58:50.338834177 -0500
