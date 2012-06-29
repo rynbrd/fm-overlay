@@ -28,7 +28,19 @@ diff -urN a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
  )
 diff -urN a/cmake/base.cmake b/cmake/base.cmake
 --- a/cmake/base.cmake	2012-06-28 18:51:14.735892871 -0500
-+++ b/cmake/base.cmake	2012-06-28 21:15:48.086474088 -0500
++++ b/cmake/base.cmake	2012-06-28 22:32:52.865781532 -0500
+@@ -7,9 +7,9 @@
+     mark_as_advanced (FORCE GCONFTOOL_EXECUTABLE)
+ 
+     if (NOT COMPIZ_INSTALL_GCONF_SCHEMA_DIR)
+-        set (SCHEMADIR "${CMAKE_INSTALL_PREFIX}/share/gconf/schemas")
++        set (SCHEMADIR "${COMPIZ_DESTDIR}${CMAKE_INSTALL_PREFIX}/share/gconf/schemas")
+     else (NOT COMPIZ_INSTALL_GCONF_SCHEMA_DIR)
+-        set (SCHEMADIR "${COMPIZ_INSTALL_GCONF_SCHEMA_DIR}")
++        set (SCHEMADIR "${COMPIZ_DESTDIR}${COMPIZ_INSTALL_GCONF_SCHEMA_DIR}")
+     endif (NOT COMPIZ_INSTALL_GCONF_SCHEMA_DIR)
+ 
+     if (NOT GCONF_FOUND OR NOT GCONFTOOL_EXECUTABLE)
 @@ -51,10 +51,10 @@
      install (FILES
  	     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindCompiz.cmake
