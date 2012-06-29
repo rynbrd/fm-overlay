@@ -1,4 +1,3 @@
-Binary files a/.CMakeLists.txt.swp and b/.CMakeLists.txt.swp differ
 diff -urN a/CMakeLists.txt b/CMakeLists.txt
 --- a/CMakeLists.txt	2012-06-28 18:51:14.737892849 -0500
 +++ b/CMakeLists.txt	2012-06-28 19:54:32.611516021 -0500
@@ -11,7 +10,6 @@ diff -urN a/CMakeLists.txt b/CMakeLists.txt
  )
  
  # Build Google Test and make its headers known
-Binary files a/cmake/.base.cmake.swp and b/cmake/.base.cmake.swp differ
 diff -urN a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
 --- a/cmake/CMakeLists.txt	2012-06-28 18:51:14.735892871 -0500
 +++ b/cmake/CMakeLists.txt	2012-06-28 21:54:05.347740549 -0500
