@@ -22,6 +22,9 @@ IUSE="+cairo fuse gnome gtk kde +svg dbus"
 
 COMMONDEPEND="
 	!x11-libs/compiz-bcop
+	!x11-libs/libcompizconfig
+	!x11-libs/compizconfig-backend-gconf
+	!x11-libs/compizconfig-backend-kconfig4
 	>=dev-libs/boost-1.34.0
 	>=dev-libs/glib-2.30.0
 	dev-libs/libxml2
