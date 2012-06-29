@@ -112,8 +112,8 @@ src_compile() {
 src_install() {
 	pushd ${CMAKE_BUILD_DIR}
 	dodir /usr/share/cmake/Modules
-	emake findcompiz_install
-	emake install
+	emake DESTDIR="${D}" findcompiz_install
+	emake DESTDIR="${D}" install
 	popd ${CMAKE_BUILD_DIR}
 }
 
