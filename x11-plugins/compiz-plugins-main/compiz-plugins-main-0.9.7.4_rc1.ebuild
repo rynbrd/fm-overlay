@@ -21,7 +21,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 COMMONDEPEND="
-	~x11-wm/compiz-0.9.8_rc1
+	~x11-wm/compiz-0.9.7
 	!x11-plugins/compiz-fusion-plugins-main
 	>=gnome-base/librsvg-2.14.0
 	media-libs/libjpeg-turbo
