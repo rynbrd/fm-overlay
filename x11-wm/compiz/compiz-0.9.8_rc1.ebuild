@@ -12,8 +12,8 @@ EBZR_REVISION="3262"
 
 inherit eutils bzr cmake-utils gnome2-utils
 
-DESCRIPTION="OpenGL window and compositing manager"
-HOMEPAGE="http://www.compiz.org/"
+DESCRIPTION="OpenGL compositing window manager."
+HOMEPAGE="https://launchpad.net/compiz"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0"
