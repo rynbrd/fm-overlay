@@ -10,6 +10,8 @@ SRC_URI=""
 EBZR_REPO_URI="http://bazaar.launchpad.net/~compiz-team/compiz-plugins-main/${MY_PV}"
 EBZR_REVISION="33"
 
+inherit bzr cmake-utils
+
 DESCRIPTION="Compiz main plugins collection."
 HOMEPAGE="https://launchpad.net/compiz-plugins-main/"
 
@@ -32,7 +34,21 @@ RDEPEND="${DEPEND}
 	>=dev-util/pkgconfig-0.19
 	>=sys-devel/gettext-0.15"
 
+src_unpack() {
+	bzr_src_unpack
+}
+
+src_prepare() {
+	bzr_src_prepare
+}
+
 src_configure() {
+	local mycmakeargs=(
+		"-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON"
+		"-DCOMPIZ_PACKAGING_ENABLED=ON"
+		"-DCOMPIZ_DESTDIR=${D}"
+	)
+
 	cmake-utils_src_configure
 }
 
@@ -41,6 +57,7 @@ src_compile() {
 }
 
 src_install() {
+	export DESTDIR="${D}"
 	cmake-utils_src_install
 }
 
