@@ -20,19 +20,21 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="
+COMMONDEPEND="
 	~x11-wm/compiz-0.9.8_rc1
 	!x11-plugins/compiz-fusion-plugins-main
 	>=gnome-base/librsvg-2.14.0
 	media-libs/libjpeg-turbo
-	x11-libs/cairo
+	x11-libs/cairo"
+
+DEPEND="${COMMONDEPEND}
+	>=dev-util/pkgconfig-0.19
+	>=dev-util/intltool-0.35
+	>=sys-devel/gettext-0.15
 	dev-cpp/gtest
 	dev-cpp/gmock"
 
-RDEPEND="${DEPEND}
-	>=dev-util/intltool-0.35
-	>=dev-util/pkgconfig-0.19
-	>=sys-devel/gettext-0.15"
+RDEPEND="${COMMONDEPEND}"
 
 src_unpack() {
 	bzr_src_unpack
