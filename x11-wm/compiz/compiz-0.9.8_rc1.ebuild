@@ -42,7 +42,7 @@ COMMONDEPEND="
 	x11-libs/libICE
 	x11-libs/libSM
 	>=x11-libs/startup-notification-0.7
-        cairo? (
+	cairo? (
 		x11-libs/cairo[X]
 	)
 	fuse? ( sys-fs/fuse )  
@@ -71,7 +71,10 @@ COMMONDEPEND="
 DEPEND="${COMMONDEPEND}
 	dev-util/pkgconfig
 	x11-proto/damageproto
-	x11-proto/xineramaproto"
+	x11-proto/xineramaproto
+	dev-cpp/gtest
+	dev-cpp/gmock"
+
 RDEPEND="${COMMONDEPEND}
 	x11-apps/mesa-progs
 	x11-apps/xvinfo"
