@@ -22,7 +22,7 @@ HOMEPAGE="http://www.compiz.org/"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS=""
 IUSE="gnome gtk kde +svg"
 
 COMMONDEPEND="

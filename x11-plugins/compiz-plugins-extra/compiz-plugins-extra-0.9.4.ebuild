@@ -20,7 +20,7 @@ HOMEPAGE="http://www.compiz.org/"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS=""
 IUSE="gnome"
 
 RDEPEND="
