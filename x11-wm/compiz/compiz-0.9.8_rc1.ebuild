@@ -75,6 +75,7 @@ COMMONDEPEND="
 	dbus? ( >=sys-apps/dbus-1.0 )"
 
 DEPEND="${COMMONDEPEND}
+	app-admin/chrpath
 	dev-util/pkgconfig
 	x11-proto/damageproto
 	x11-proto/xineramaproto
@@ -130,6 +131,7 @@ src_install() {
 	emake DESTDIR="${D}" findcompiz_install
 	emake DESTDIR="${D}" install
 	popd ${CMAKE_BUILD_DIR}
+	chrpath -d "${D}/usr/lib64/python2.7/site-packages/compizconfig.so"
 }
 
 pkg_preinst() {
