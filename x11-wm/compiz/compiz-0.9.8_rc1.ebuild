@@ -10,7 +10,7 @@ SRC_URI=""
 EBZR_REPO_URI="http://bazaar.launchpad.net/~compiz-team/compiz/${MY_PV}"
 EBZR_REVISION="3262"
 
-inherit eutils bzr cmake-utils gnome2-utils
+inherit eutils bzr cmake-utils gnome2-utils flag-o-matic
 
 DESCRIPTION="OpenGL compositing window manager."
 HOMEPAGE="https://launchpad.net/compiz"
@@ -21,10 +21,16 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+cairo fuse gnome gtk kde +svg dbus"
 
 COMMONDEPEND="
+	!x11-wm/compiz-fusion
 	!x11-libs/compiz-bcop
 	!x11-libs/libcompizconfig
 	!x11-libs/compizconfig-backend-gconf
 	!x11-libs/compizconfig-backend-kconfig4
+	!x11-libs/compiz-plugins-main
+	!x11-libs/compiz-plugins-extra
+	!x11-libs/compiz-plugins-unsupported
+	!x11-apps/ccsm
+	!dev-python/compizconfig-python
 	>=dev-libs/boost-1.34.0
 	>=dev-libs/glib-2.30.0
 	dev-libs/libxml2
@@ -37,7 +43,7 @@ COMMONDEPEND="
 	x11-libs/libXdamage
 	x11-libs/libXext
 	x11-libs/libXrandr
-	x11-libs/libXrender
+	>=x11-libs/libXrender-0.9.3
 	x11-libs/libXinerama
 	x11-libs/libICE
 	x11-libs/libSM
@@ -47,13 +53,13 @@ COMMONDEPEND="
 	)
 	fuse? ( sys-fs/fuse )  
 	gtk? (
-		>=x11-libs/gtk+-2.8.0
-		x11-libs/libwnck
+		>=x11-libs/gtk+-2.18.0
+		>=x11-libs/libwnck-2.19.4
 		x11-libs/pango
 		gnome? (
 			gnome-base/gnome-desktop
 			gnome-base/gconf
-			x11-wm/metacity
+			>=x11-wm/metacity-2.23.2
 		)
 	)
 	kde? (
@@ -87,6 +93,7 @@ src_prepare() {
 	bzr_src_prepare
 
 	epatch "${FILESDIR}/${P}-sandbox.patch"
+	epatch "${FILESDIR}/${P}-ccsm-setup.patch"
 
 	echo "gtk/gnome/compiz-wm.desktop.in" >> "${S}/po/POTFILES.skip"
 	echo "metadata/core.xml.in" >> "${S}/po/POTFILES.skip"
@@ -103,6 +110,8 @@ src_configure() {
 		"$(cmake-utils_use_use gnome GNOME)"
 		"$(cmake-utils_use_use gtk GTK)"
 		"$(cmake-utils_use_use kde KDE4)"
+		"-DCMAKE_C_FLAGS="
+		"-DCMAKE_CXX_FLAGS="
 		"-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON"
 		"-DCOMPIZ_PACKAGING_ENABLED=ON"
 		"-DCOMPIZ_DESTDIR=${D}"
