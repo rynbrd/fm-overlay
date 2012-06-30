@@ -113,6 +113,7 @@ src_configure() {
 		"$(cmake-utils_use_use kde KDE4)"
 		"-DCMAKE_C_FLAGS="
 		"-DCMAKE_CXX_FLAGS="
+		"-DCOMPIZ_DEFAULT_PLUGINS=ccp"
 		"-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON"
 		"-DCOMPIZ_PACKAGING_ENABLED=ON"
 		"-DCOMPIZ_DESTDIR=${D}"
