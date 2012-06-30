@@ -1,6 +1,6 @@
 diff -urN a/cmake/base.cmake b/cmake/base.cmake
---- a/cmake/base.cmake	2012-06-28 18:51:14.735892871 -0500
-+++ b/cmake/base.cmake	2012-06-29 01:45:15.057570579 -0500
+--- a/cmake/base.cmake	2012-06-29 02:33:47.076801000 -0500
++++ b/cmake/base.cmake	2012-06-29 22:47:06.868740002 -0500
 @@ -53,8 +53,8 @@
  	     DESTINATION
  	     ${CMAKE_INSTALL_PREFIX}/share/cmake-${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}/)
@@ -23,3 +23,20 @@ diff -urN a/cmake/base.cmake b/cmake/base.cmake
      )
  endfunction ()
  
+diff -urN a/compizconfig/libcompizconfig/config/CMakeLists.txt b/compizconfig/libcompizconfig/config/CMakeLists.txt
+--- a/compizconfig/libcompizconfig/config/CMakeLists.txt	2012-06-29 02:33:51.195800999 -0500
++++ b/compizconfig/libcompizconfig/config/CMakeLists.txt	2012-06-29 22:48:56.602740000 -0500
+@@ -1,10 +1,10 @@
+ set (_config_file
+      config)
+ 
+-compiz_opt_install_file (${CMAKE_CURRENT_SOURCE_DIR}/${_config_file} ${COMPIZ_SYSCONFDIR}/compizconfig/${_config_file})
++compiz_opt_install_file (${CMAKE_CURRENT_SOURCE_DIR}/${_config_file} ${COMPIZ_DESTDIR}${COMPIZ_SYSCONFDIR}/compizconfig/${_config_file})
+ 
+ add_custom_target (
+     config_install
+-    ${CMAKE_COMMAND} -E make_directory ${CMAKE_ROOT}/Modules &&
+-    ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/config/${_config_file} ${COMPIZ_SYSCONFDIR}/compizconfig/${_config_file}
++    ${CMAKE_COMMAND} -E make_directory ${COMPIZ_DESTDIR}${CMAKE_ROOT}/Modules &&
++    ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/config/${_config_file} ${COMPIZ_DESTDIR}${COMPIZ_SYSCONFDIR}/compizconfig/${_config_file}
+     )
