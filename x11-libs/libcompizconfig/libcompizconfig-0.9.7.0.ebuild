@@ -17,23 +17,13 @@ SRC_URI="https://launchpad.net/ubuntu/precise/+source/libcompizconfig/0.9.7.0~bz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="gnome gtk kde"
+IUSE=""
 
 COMMONDEPEND="
 	dev-libs/libxml2
 	dev-libs/libxslt
 	dev-libs/protobuf
-	~x11-wm/compiz-${MY_PV}
-	gtk? (
-		>=x11-libs/gtk+-2.18.0
-		>=x11-libs/libwnck-2.19.4
-		x11-libs/pango
-		gnome? (
-			gnome-base/gnome-desktop
-			gnome-base/gconf
-			>=x11-wm/metacity-2.23.2
-		)
-	)"
+	=x11-wm/compiz-${MY_PV}"
 
 DEPEND="${COMMONDEPEND}
 	>=dev-util/pkgconfig-0.19"
