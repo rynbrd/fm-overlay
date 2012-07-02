@@ -23,7 +23,7 @@ COMMONDEPEND="
 	dev-libs/libxml2
 	dev-libs/libxslt
 	dev-libs/protobuf
-	=x11-wm/compiz-${MY_PV}"
+	=x11-wm/compiz-0.9.7.8"
 
 DEPEND="${COMMONDEPEND}
 	>=dev-util/pkgconfig-0.19"
