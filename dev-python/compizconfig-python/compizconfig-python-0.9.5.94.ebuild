@@ -10,12 +10,13 @@ RESTRICT_PYTHON_ABIS="3.*"
 
 inherit distutils
 
+MY_PV="0.9.7.0"
 UBUNTU_PV="${PV}-0ubuntu4"
-UBUNTU_PN="${PN}_${PV}"
+UBUNTU_P="${PN}_${PV}"
 
 DESCRIPTION="Compiz config Python bindings."
 HOMEPAGE="https://launchpad.net/compizconfig-python"
-SRC_URI="https://launchpad.net/ubuntu/precise/+source/${PN}/${UBUNTU_PV}/+files/${UBUNTU_PN}.orig.tar.gz"
+SRC_URI="https://launchpad.net/ubuntu/precise/+source/${PN}/${UBUNTU_PV}/+files/${UBUNTU_P}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -23,8 +24,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="
-	>=x11-wm/compiz-${PV}
-	~x11-libs/libcompizconfig-${PV}
+	>=x11-wm/compiz-${MY_PV}
+	>=x11-libs/libcompizconfig-${MY_PV}
 	>=dev-libs/glib-2.6
 	dev-python/cython"
 RDEPEND="${DEPEND}"
