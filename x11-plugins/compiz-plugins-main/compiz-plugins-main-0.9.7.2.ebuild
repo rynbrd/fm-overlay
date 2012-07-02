@@ -6,7 +6,7 @@ EAPI=4
 
 inherit cmake-utils
 
-MY_PV="0.9.7"
+MY_PV="${PV%.*}"
 
 DESCRIPTION="Compiz main plugins collection."
 HOMEPAGE="https://launchpad.net/compiz-plugins-main/"
