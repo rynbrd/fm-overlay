@@ -10,7 +10,7 @@ MY_PV="0.9.7"
 
 DESCRIPTION="Compiz main plugins collection."
 HOMEPAGE="https://launchpad.net/compiz-plugins-main/"
-SRC_URI="https://launchpad.net/compiz-plugins-main/${MY_PV}/${PV}/+download/${P}.tar.bz2"
+SRC_URI="https://launchpad.net/${PN}/${MY_PV}/${PV}/+download/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
