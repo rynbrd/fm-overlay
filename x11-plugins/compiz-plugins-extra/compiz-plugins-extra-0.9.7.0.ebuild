@@ -20,7 +20,7 @@ IUSE=""
 COMMONDEPEND="
 	!x11-plugins/compiz-fusion-plugins-extra
 	>=x11-wm/compiz-${MY_PV}
-	>=x11-wm/compiz-plugins-main-${MY_PV}.0
+	>=x11-plugins/compiz-plugins-main-${MY_PV}.0
 	>=gnome-base/librsvg-2.14.0
 	media-libs/libjpeg-turbo
 	x11-libs/cairo"
