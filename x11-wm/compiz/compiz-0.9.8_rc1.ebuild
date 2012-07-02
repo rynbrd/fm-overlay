@@ -4,7 +4,7 @@
 
 EAPI=4
 
-MY_PV="0.9.8"
+MY_PV="${PV%_*}"
 
 SRC_URI=""
 EBZR_REPO_URI="http://bazaar.launchpad.net/~compiz-team/compiz/${MY_PV}"
