@@ -6,9 +6,12 @@ EAPI=4
 
 inherit cmake-utils
 
+MY_PV="0.9.5.0"
+UBUNTU_P="${PN}_${PV}"
+
 DESCRIPTION="Compiz GConf configuration backend."
 HOMEPAGE="https://launchpad.net/libcompizconfig-backend-gconf"
-SRC_URI="https://launchpad.net/ubuntu/+archive/primary/+files/compizconfig-backend-gconf_0.9.5.92.orig.tar.gz"
+SRC_URI="https://launchpad.net/ubuntu/+archive/primary/+files/${UBUNTU_P}.orig.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
