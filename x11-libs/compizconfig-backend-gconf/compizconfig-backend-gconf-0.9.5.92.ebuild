@@ -17,8 +17,8 @@ IUSE=""
 
 DEPEND="
 	>=gnome-base/gconf-2.0
-	>=x11-libs/libcompizconfig-${PV}
-	>=x11-wm/compiz-${PV}"
+	>=x11-libs/libcompizconfig-${PV}"
+
 RDEPEND="${DEPEND}"
 
 src_configure() {
