@@ -6,7 +6,7 @@ EAPI=4
 
 inherit cmake-utils
 
-MY_PV="0.9.5.0"
+MY_PV="${PV%.*}"
 UBUNTU_P="${PN}_${PV}"
 
 DESCRIPTION="Compiz GConf configuration backend."
@@ -20,7 +20,7 @@ IUSE=""
 
 DEPEND="
 	>=gnome-base/gconf-2.0
-	>=x11-libs/libcompizconfig-${PV}"
+	>=x11-libs/libcompizconfig-${MY_PV}.0"
 
 RDEPEND="${DEPEND}"
 
