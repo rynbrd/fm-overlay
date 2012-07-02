@@ -8,7 +8,7 @@ MY_PV="${PV%_*}"
 
 SRC_URI=""
 EBZR_REPO_URI="http://bazaar.launchpad.net/~compiz-team/compiz/${MY_PV}"
-EBZR_REVISION="3262"
+EBZR_REVISION="${PV#*_rc}"
 
 inherit eutils bzr cmake-utils gnome2-utils flag-o-matic
 
@@ -18,7 +18,7 @@ HOMEPAGE="https://launchpad.net/compiz"
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0"
 KEYWORDS=""
-IUSE="+cairo fuse gnome gtk kde +svg dbus"
+IUSE="+cairo debug fuse gnome gtk kde +svg dbus"
 
 COMMONDEPEND="
 	!x11-wm/compiz-fusion
