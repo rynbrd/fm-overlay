@@ -10,7 +10,7 @@ RESTRICT_PYTHON_ABIS="3.*"
 
 inherit distutils
 
-MY_PV="0.9.7.0"
+MY_PV="${PV%.*}"
 UBUNTU_PV="${PV}-0ubuntu4"
 UBUNTU_P="${PN}_${PV}"
 
@@ -25,7 +25,7 @@ IUSE=""
 
 DEPEND="
 	>=x11-wm/compiz-${MY_PV}
-	>=x11-libs/libcompizconfig-${MY_PV}
+	>=x11-libs/libcompizconfig-${MY_PV}.0
 	>=dev-libs/glib-2.6
 	dev-python/cython"
 RDEPEND="${DEPEND}"
