@@ -6,7 +6,7 @@ EAPI=4
 
 inherit cmake-utils git
 
-MY_PV="0.9.7"
+MY_PV="0.9.7.0"
 ARCHIVE_PV="0.9.5.94"
 ARCHIVE_P="${PN}-${ARCHIVE_PV}"
 
