@@ -17,7 +17,7 @@ HOMEPAGE="https://launchpad.net/compiz"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="+cairo fuse gnome gtk kde +svg dbus"
 
 COMMONDEPEND="
