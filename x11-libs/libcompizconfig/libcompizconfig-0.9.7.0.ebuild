@@ -23,7 +23,7 @@ COMMONDEPEND="
 	dev-libs/libxml2
 	dev-libs/libxslt
 	dev-libs/protobuf
-	=x11-wm/compiz-0.9.7.8"
+	>=x11-wm/compiz-${MY_PV}"
 
 DEPEND="${COMMONDEPEND}
 	>=dev-util/pkgconfig-0.19"
@@ -42,7 +42,7 @@ src_prepare() {
 src_configure() {
 	mycmakeargs=(
 		"-DCMAKE_CXX_FLAGS=-fno-strict-aliasing"
-		"-DCMAKE_MODULE_PATH=/usr/share/cmake/Modules"
+		"-DCMAKE_MODULE_PATH=/usr/share/compiz/cmake"
 		"-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON"
 		"-DCOMPIZ_DESTDIR=${D}"
 	)
