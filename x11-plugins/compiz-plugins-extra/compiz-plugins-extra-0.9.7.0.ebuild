@@ -6,7 +6,7 @@ EAPI=4
 
 inherit cmake-utils
 
-MY_PV="0.9.7"
+MY_PV="${PV%.*}"
 
 DESCRIPTION="Compiz extra plugins collection."
 HOMEPAGE="https://launchpad.net/compiz-plugins-extra/"
@@ -20,7 +20,7 @@ IUSE=""
 COMMONDEPEND="
 	!x11-plugins/compiz-fusion-plugins-extra
 	>=x11-wm/compiz-${MY_PV}
-	>=x11-wm/compiz-plugins-main-${MY_PV}
+	>=x11-wm/compiz-plugins-main-${MY_PV}.0
 	>=gnome-base/librsvg-2.14.0
 	media-libs/libjpeg-turbo
 	x11-libs/cairo"
