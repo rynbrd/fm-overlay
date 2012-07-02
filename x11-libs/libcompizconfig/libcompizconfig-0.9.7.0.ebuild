@@ -6,13 +6,16 @@ EAPI=4
 
 inherit cmake-utils git
 
-MY_PV="0.9.7.0"
+MY_PV="${PV%.*}"
+UBUNTU_R="~bzr428"
+UBUNTU_PV="${PV}${UBUNTU_R}-0ubuntu6"
+UBUNTU_P="${PN}_${PV}${UBUNTU_R}"
 ARCHIVE_PV="0.9.5.94"
 ARCHIVE_P="${PN}-${ARCHIVE_PV}"
 
 DESCRIPTION="Compiz configuration libaries."
 HOMEPAGE="https://launchpad.net/libcompizconfig"
-SRC_URI="https://launchpad.net/ubuntu/precise/+source/libcompizconfig/0.9.7.0~bzr428-0ubuntu6/+files/libcompizconfig_0.9.7.0~bzr428.orig.tar.bz2"
+SRC_URI="https://launchpad.net/ubuntu/precise/+source/libcompizconfig/${UBUNTU_PV}/+files/${UBUNTU_P}.orig.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
