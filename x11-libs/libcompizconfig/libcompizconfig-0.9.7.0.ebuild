@@ -41,12 +41,8 @@ src_prepare() {
 
 src_configure() {
 	mycmakeargs=(
-		"$(cmake-utils_use_use gnome GCONF)"
-		"$(cmake-utils_use_use gnome GNOME)"
-		"$(cmake-utils_use_use gnome METACITY)"
-		"$(cmake-utils_use_use gtk GTK)"
-		"$(cmake-utils_use_use kde KDE4)"
 		"-DCMAKE_CXX_FLAGS=-fno-strict-aliasing"
+		"-DCMAKE_MODULE_PATH=/usr/share/cmake/Modules"
 		"-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON"
 		"-DCOMPIZ_DESTDIR=${D}"
 	)

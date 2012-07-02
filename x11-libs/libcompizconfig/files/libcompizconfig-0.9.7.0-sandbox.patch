@@ -1,6 +1,6 @@
 diff -urN a/CMakeLists.txt b/CMakeLists.txt
 --- a/CMakeLists.txt	2012-07-01 15:32:22.655369000 -0500
-+++ b/CMakeLists.txt	2012-07-01 16:46:02.021369000 -0500
++++ b/CMakeLists.txt	2012-07-02 00:22:00.561346000 -0500
 @@ -131,7 +131,7 @@
  
  install (
@@ -16,15 +16,20 @@ diff -urN a/CMakeLists.txt b/CMakeLists.txt
          findcompizconfig_install
 -	${CMAKE_COMMAND} -E make_directory ${COMPIZ_DESTDIR}${CMAKE_ROOT}/Modules &&
 -	${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cmake/FindCompizConfig.cmake ${COMPIZ_DESTDIR}${CMAKE_ROOT}/Modules
-+	${CMAKE_COMMAND} -E make_directory ${CMAKE_ROOT}/Modules &&
-+	${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cmake/FindCompizConfig.cmake ${CMAKE_ROOT}/Modules
++		${CMAKE_COMMAND} -E make_directory ${COMPIZ_CONFIG}${CMAKE_ROOT}/Modules &&
++		${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cmake/FindCompizConfig.cmake ${COMPIZ_CONFIG}${CMAKE_ROOT}/Modules
      )
  
  macro (add_uninstall)
+Binary files a/cmake/.CMakeLists.txt.swp and b/cmake/.CMakeLists.txt.swp differ
 diff -urN a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
 --- a/cmake/CMakeLists.txt	2012-07-01 15:32:22.654369000 -0500
-+++ b/cmake/CMakeLists.txt	2012-07-01 16:46:07.490369000 -0500
-@@ -4,5 +4,5 @@
++++ b/cmake/CMakeLists.txt	2012-07-02 00:22:34.718346002 -0500
+@@ -1,8 +1,9 @@
+ set (_files
+     LibCompizConfigCommon.cmake
++	FindCompizConfig.cmake
+ )
  
  install (
      FILES ${_files}
@@ -33,7 +38,7 @@ diff -urN a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
  )
 diff -urN a/cmake/LibCompizConfigCommon.cmake b/cmake/LibCompizConfigCommon.cmake
 --- a/cmake/LibCompizConfigCommon.cmake	2012-07-01 15:32:22.654369000 -0500
-+++ b/cmake/LibCompizConfigCommon.cmake	2012-07-01 16:46:05.042369000 -0500
++++ b/cmake/LibCompizConfigCommon.cmake	2012-07-02 00:05:41.491346007 -0500
 @@ -122,7 +122,7 @@
  
      install (
@@ -45,7 +50,7 @@ diff -urN a/cmake/LibCompizConfigCommon.cmake b/cmake/LibCompizConfigCommon.cmak
      if (NOT _COMPIZCONFIG_INTERNAL)
 diff -urN a/config/CMakeLists.txt b/config/CMakeLists.txt
 --- a/config/CMakeLists.txt	2012-07-01 15:32:22.655369000 -0500
-+++ b/config/CMakeLists.txt	2012-07-01 16:46:09.761369000 -0500
++++ b/config/CMakeLists.txt	2012-07-02 00:05:41.492346007 -0500
 @@ -1,10 +1,10 @@
  set (_config_file
       config)
@@ -62,7 +67,7 @@ diff -urN a/config/CMakeLists.txt b/config/CMakeLists.txt
      )
 diff -urN a/include/CMakeLists.txt b/include/CMakeLists.txt
 --- a/include/CMakeLists.txt	2012-07-01 15:32:22.656369000 -0500
-+++ b/include/CMakeLists.txt	2012-07-01 16:46:11.785369000 -0500
++++ b/include/CMakeLists.txt	2012-07-02 00:05:41.492346007 -0500
 @@ -5,5 +5,5 @@
  
  install (
@@ -72,7 +77,7 @@ diff -urN a/include/CMakeLists.txt b/include/CMakeLists.txt
  	)
 diff -urN a/src/CMakeLists.txt b/src/CMakeLists.txt
 --- a/src/CMakeLists.txt	2012-07-01 15:32:22.654369000 -0500
-+++ b/src/CMakeLists.txt	2012-07-01 16:46:16.042369000 -0500
++++ b/src/CMakeLists.txt	2012-07-02 00:05:41.493346004 -0500
 @@ -76,5 +76,5 @@
  
  install (
