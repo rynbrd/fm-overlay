@@ -35,6 +35,7 @@ COMMONDEPEND="
 	>=dev-libs/glib-2.30.0
 	dev-libs/libxml2
 	dev-libs/libxslt
+	dev-python/pyrex
 	media-libs/libpng
 	>=media-libs/mesa-6.5.1-r1
 	>=x11-base/xorg-server-1.1.1-r1
