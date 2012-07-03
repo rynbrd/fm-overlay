@@ -1,33 +1,24 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI=4
 
-MY_PN="${PN}-core"
-MY_P="${MY_PN}-${PV}"
+SRC_URI="https://launchpad.net/ubuntu/+archive/primary/+files/compiz_0.9.7.8.orig.tar.bz2"
 
-if [[ ${PV} != *9999* ]]; then
-	SRC_URI="http://releases.compiz.org/${PV}/${MY_P}.tar.bz2"
-else
-	GIT_ECLASS="git"
-	EGIT_REPO_URI="git://anongit.compiz-fusion.org/${PN}/core"
-	SRC_URI=""
-fi
+inherit eutils cmake-utils gnome2-utils flag-o-matic
 
-inherit cmake-utils eutils ${GIT_ECLASS} gnome2-utils
-
-DESCRIPTION="OpenGL window and compositing manager"
-HOMEPAGE="http://www.compiz.org/"
+DESCRIPTION="OpenGL compositing window manager."
+HOMEPAGE="https://launchpad.net/compiz"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0"
-KEYWORDS=""
-IUSE="gnome gtk kde +svg"
+KEYWORDS="~amd64 ~x86"
+IUSE="+cairo fuse gnome gtk kde +svg dbus"
 
 COMMONDEPEND="
-	!x11-libs/compiz-bcop
-	dev-libs/glib:2
+	>=dev-libs/boost-1.34.0
+	>=dev-libs/glib-2.30.0
 	dev-libs/libxml2
 	dev-libs/libxslt
 	media-libs/libpng
@@ -38,19 +29,23 @@ COMMONDEPEND="
 	x11-libs/libXdamage
 	x11-libs/libXext
 	x11-libs/libXrandr
-	x11-libs/libXrender
+	>=x11-libs/libXrender-0.9.3
 	x11-libs/libXinerama
 	x11-libs/libICE
 	x11-libs/libSM
 	>=x11-libs/startup-notification-0.7
+	cairo? (
+		x11-libs/cairo[X]
+	)
+	fuse? ( sys-fs/fuse )  
 	gtk? (
-		>=x11-libs/gtk+-2.8.0
-		x11-libs/libwnck
+		>=x11-libs/gtk+-2.18.0
+		>=x11-libs/libwnck-2.19.4
 		x11-libs/pango
 		gnome? (
 			gnome-base/gnome-desktop
 			gnome-base/gconf
-			x11-wm/metacity
+			>=x11-wm/metacity-2.23.2
 		)
 	)
 	kde? (
@@ -63,23 +58,32 @@ COMMONDEPEND="
 		>=gnome-base/librsvg-2.14.0:2
 		>=x11-libs/cairo-1.0
 	)
-"
+	dbus? ( >=sys-apps/dbus-1.0 )"
+
 DEPEND="${COMMONDEPEND}
+	app-admin/chrpath
 	dev-util/pkgconfig
 	x11-proto/damageproto
 	x11-proto/xineramaproto
-"
+	dev-cpp/gtest
+	dev-cpp/gmock"
+
 RDEPEND="${COMMONDEPEND}
 	x11-apps/mesa-progs
-	x11-apps/xvinfo
-"
+	x11-apps/xvinfo"
 
-S="${WORKDIR}/core"
+src_prepare() {
+	epatch "${FILESDIR}/${P}-sandbox.patch"
+#	epatch "${FILESDIR}/${P}-ccsm-setup.patch"
 
-#src_prepare() {
-# this patch doesnt seem to apply to the newest version ~mordjah
-#	epatch "${FILESDIR}/${PN}-desktop-gnome-or-not.patch"
-#}
+	echo "gtk/gnome/compiz-wm.desktop.in" >> "${S}/po/POTFILES.skip"
+	echo "metadata/core.xml.in" >> "${S}/po/POTFILES.skip"
+
+	if use kde; then
+		$(has_version ">=kde-base/kwin-4.8") && \
+			epatch "${FILESDIR}/${P}-kde-4.8.patch"
+	fi
+}
 
 src_configure() {
 	local mycmakeargs=(
@@ -87,6 +91,8 @@ src_configure() {
 		"$(cmake-utils_use_use gnome GNOME)"
 		"$(cmake-utils_use_use gtk GTK)"
 		"$(cmake-utils_use_use kde KDE4)"
+		"-DCMAKE_C_FLAGS="
+		"-DCMAKE_CXX_FLAGS="
 		"-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON"
 		"-DCOMPIZ_PACKAGING_ENABLED=ON"
 		"-DCOMPIZ_DESTDIR=${D}"
@@ -95,12 +101,17 @@ src_configure() {
 	cmake-utils_src_configure
 }
 
+src_compile() {
+	cmake-utils_src_compile
+}
+
 src_install() {
 	pushd ${CMAKE_BUILD_DIR}
 	dodir /usr/share/cmake/Modules
-	emake findcompiz_install || die "Failed to install FindCompiz cmake module"
-	emake install || die "Failed to install"
+	emake DESTDIR="${D}" findcompiz_install
+	emake DESTDIR="${D}" install
 	popd ${CMAKE_BUILD_DIR}
+	chrpath -d "${D}/usr/lib64/python2.7/site-packages/compizconfig.so"
 }
 
 pkg_preinst() {
@@ -114,3 +125,4 @@ pkg_postinst() {
 pkg_prerm() {
 	use gnome && gnome2_gconf_uninstall
 }
+

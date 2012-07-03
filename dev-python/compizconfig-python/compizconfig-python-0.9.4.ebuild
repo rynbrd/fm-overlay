@@ -16,7 +16,7 @@ SRC_URI="http://releases.compiz.org/${PV}/compiz-${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS=""
 IUSE=""
 
 DEPEND="

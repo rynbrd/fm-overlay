@@ -12,7 +12,7 @@ SRC_URI="http://releases.compiz.org/${PV}/compiz-${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS=""
 IUSE=""
 
 DEPEND="
@@ -26,7 +26,7 @@ S="${WORKDIR}/compizconfig-backend-kconfig4"
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-        epatch ${FILESDIR}/fix_cmake_order.patch
+	epatch ${FILESDIR}/fix_cmake_order.patch
 }
 
 src_configure() {
