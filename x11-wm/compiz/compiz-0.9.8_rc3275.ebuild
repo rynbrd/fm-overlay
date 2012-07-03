@@ -26,9 +26,9 @@ COMMONDEPEND="
 	!x11-libs/libcompizconfig
 	!x11-libs/compizconfig-backend-gconf
 	!x11-libs/compizconfig-backend-kconfig4
-	!x11-libs/compiz-plugins-main
-	!x11-libs/compiz-plugins-extra
-	!x11-libs/compiz-plugins-unsupported
+	!x11-plugins/compiz-plugins-main
+	!x11-plugins/compiz-plugins-extra
+	!x11-plugins/compiz-plugins-unsupported
 	!x11-apps/ccsm
 	!dev-python/compizconfig-python
 	>=dev-libs/boost-1.34.0
@@ -105,8 +105,8 @@ src_configure() {
 		"$(cmake-utils_use_use gnome GNOME)"
 		"$(cmake-utils_use_use gtk GTK)"
 		"$(cmake-utils_use_use kde KDE4)"
-		"-DCMAKE_C_FLAGS="
-		"-DCMAKE_CXX_FLAGS="
+		"-DCMAKE_C_FLAGS=$(usex debug '-DDEBUG -ggdb' '')"
+		"-DCMAKE_CXX_FLAGS=$(usex debug '-DDEBUG -ggdb' '')"
 		"-DCOMPIZ_DEFAULT_PLUGINS=ccp"
 		"-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON"
 		"-DCOMPIZ_PACKAGING_ENABLED=ON"
