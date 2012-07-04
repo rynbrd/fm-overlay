@@ -31,6 +31,7 @@ COMMONDEPEND="
 	!x11-plugins/compiz-plugins-unsupported
 	!x11-apps/ccsm
 	!dev-python/compizconfig-python
+	!x11-apps/fusion-icon
 	>=dev-libs/boost-1.34.0
 	>=dev-libs/glib-2.30.0
 	dev-libs/libxml2
