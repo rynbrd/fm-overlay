@@ -130,8 +130,8 @@ src_install() {
 	popd ${CMAKE_BUILD_DIR}
 	chrpath -d "${D}/usr/lib64/python2.7/site-packages/compizconfig.so"
 
-	ewarn "The dbus plugin is known to crash compiz in this version. Disable it
-		if you experience crashes when plugins are enabled/disabled."
+	ewarn "The dbus plugin is known to crash compiz in this version. Disable"
+	ewarn "it if you experience crashes when plugins are enabled/disabled."
 }
 
 pkg_preinst() {
