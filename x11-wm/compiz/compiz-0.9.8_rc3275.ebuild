@@ -17,7 +17,7 @@ HOMEPAGE="https://launchpad.net/compiz"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="+cairo debug fuse gnome gtk kde +svg dbus"
 
 COMMONDEPEND="
@@ -129,6 +129,9 @@ src_install() {
 	emake DESTDIR="${D}" install
 	popd ${CMAKE_BUILD_DIR}
 	chrpath -d "${D}/usr/lib64/python2.7/site-packages/compizconfig.so"
+
+	ewarn "The dbus plugin is known to crash compiz in this version. Disable it
+		if you experience crashes when plugins are enabled/disabled."
 }
 
 pkg_preinst() {
