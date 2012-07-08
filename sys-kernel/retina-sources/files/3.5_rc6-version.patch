@@ -1,0 +1,12 @@
+diff -urNp a/Makefile b/Makefile
+--- a/Makefile	2012-07-08 00:32:23.850451018 -0500
++++ b/Makefile	2012-07-08 12:20:39.440300996 -0500
+@@ -1,7 +1,7 @@
+ VERSION = 3
+ PATCHLEVEL = 5
+ SUBLEVEL = 0
+-EXTRAVERSION = -rc6
++EXTRAVERSION = -retina-rc6
+ NAME = Saber-toothed Squirrel
+ 
+ # *DOCUMENTATION*
