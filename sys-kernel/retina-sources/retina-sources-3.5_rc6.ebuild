@@ -16,7 +16,8 @@ UNIPATCH_LIST="
 	${FILESDIR}/${PV}-version.patch
 	${FILESDIR}/${PV}-keyboard.patch
 	${FILESDIR}/${PV}-trackpad.patch
-	${FILESDIR}/${PV}-bluetooth.patch"
+	${FILESDIR}/${PV}-bluetooth.patch
+	${FILESDIR}/${PV}-applesmc.patch"
 
 # only use this if it's not an _rc/_pre release
 [ "${PV/_pre}" == "${PV}" ] && [ "${PV/_rc}" == "${PV}" ] && OKV="${PV}"
