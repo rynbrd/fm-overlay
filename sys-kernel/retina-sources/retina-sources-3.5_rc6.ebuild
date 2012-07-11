@@ -14,7 +14,8 @@ CKV="${PVR/-r/-git}"
 
 UNIPATCH_LIST="
 	${FILESDIR}/${PV}-version.patch
-	${FILESDIR}/${PV}-keyboard.patch"
+	${FILESDIR}/${PV}-keyboard.patch
+	${FILESDIR}/${PV}-trackpad.patch"
 
 # only use this if it's not an _rc/_pre release
 [ "${PV/_pre}" == "${PV}" ] && [ "${PV/_rc}" == "${PV}" ] && OKV="${PV}"
