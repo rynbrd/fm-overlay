@@ -1,0 +1,13 @@
+diff -urNp a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+--- a/drivers/bluetooth/btusb.c	2012-07-14 17:40:28.000000000 -0500
++++ b/drivers/bluetooth/btusb.c	2012-07-15 15:14:30.291702002 -0500
+@@ -81,6 +81,9 @@ static struct usb_device_id btusb_table[
+ 	/* Apple MacBookPro8,2 */
+ 	{ USB_DEVICE(0x05ac, 0x821a) },
+ 
++	/* Apple MacBookPro10,1 */
++	{ USB_DEVICE(0x05ac, 0x8286) },
++
+ 	/* Apple MacMini5,1 */
+ 	{ USB_DEVICE(0x05ac, 0x8281) },
+ 

@@ -1,0 +1,13 @@
+diff -urNp a/drivers/gpu/drm/nouveau/nouveau_bios.c b/drivers/gpu/drm/nouveau/nouveau_bios.c
+--- a/drivers/gpu/drm/nouveau/nouveau_bios.c	2012-07-14 17:40:28.000000000 -0500
++++ b/drivers/gpu/drm/nouveau/nouveau_bios.c	2012-07-15 15:17:55.119702002 -0500
+@@ -6461,6 +6461,9 @@ nouveau_run_vbios_init(struct drm_device
+ 		}
+ 	}
+ 
++	if (!bios->execute)
++		nouveau_gpio_reset(dev);
++
+ 	return ret;
+ }
+ 

@@ -1,0 +1,12 @@
+diff -urNp a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
+--- a/drivers/hwmon/applesmc.c	2012-07-14 17:40:28.000000000 -0500
++++ b/drivers/hwmon/applesmc.c	2012-07-15 15:17:09.428702007 -0500
+@@ -54,7 +54,7 @@
+ #define APPLESMC_MAX_DATA_LENGTH 32
+ 
+ /* wait up to 32 ms for a status change. */
+-#define APPLESMC_MIN_WAIT	0x0040
++#define APPLESMC_MIN_WAIT	0x0010
+ #define APPLESMC_MAX_WAIT	0x8000
+ 
+ #define APPLESMC_STATUS_MASK	0x0f
