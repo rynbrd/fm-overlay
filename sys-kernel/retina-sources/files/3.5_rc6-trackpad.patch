@@ -1,6 +1,6 @@
 diff -urNp a/drivers/input/mouse/bcm5974.c b/drivers/input/mouse/bcm5974.c
---- a/drivers/input/mouse/bcm5974.c	2012-07-08 22:45:06.840950455 -0500
-+++ b/drivers/input/mouse/bcm5974.c	2012-07-08 22:56:15.482005591 -0500
+--- a/drivers/input/mouse/bcm5974.c	2012-07-08 00:32:24.803451001 -0500
++++ b/drivers/input/mouse/bcm5974.c	2012-07-15 14:45:00.801702000 -0500
 @@ -79,6 +79,10 @@
  #define USB_DEVICE_ID_APPLE_WELLSPRING5A_ANSI	0x0252
  #define USB_DEVICE_ID_APPLE_WELLSPRING5A_ISO	0x0253
@@ -12,7 +12,18 @@ diff -urNp a/drivers/input/mouse/bcm5974.c b/drivers/input/mouse/bcm5974.c
  
  #define BCM5974_DEVICE(prod) {					\
  	.match_flags = (USB_DEVICE_ID_MATCH_DEVICE |		\
-@@ -349,6 +353,18 @@ static const struct bcm5974_config bcm59
+@@ -128,6 +132,10 @@ static const struct usb_device_id bcm597
+ 	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING5A_ANSI),
+ 	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING5A_ISO),
+ 	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING5A_JIS),
++	/* MacbookPro10,1 */
++	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING7_ANSI),
++	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING7_ISO),
++	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING7_JIS),
+ 	/* Terminating entry */
+ 	{}
+ };
+@@ -349,6 +357,18 @@ static const struct bcm5974_config bcm59
  		HAS_INTEGRATED_BUTTON,
  		0x84, sizeof(struct bt_data),
  		0x81, TYPE2, FINGER_TYPE2, FINGER_TYPE2 + SIZEOF_ALL_FINGERS,
