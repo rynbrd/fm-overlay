@@ -48,12 +48,6 @@ COMMONDEPEND="
 			>=x11-wm/metacity-2.23.2
 		)
 	)
-	kde? (
-		|| (
-			>=kde-base/kwin-4.2.0
-			kde-base/kwin:live
-		)
-	)
 	svg? (
 		>=gnome-base/librsvg-2.14.0:2
 		>=x11-libs/cairo-1.0
@@ -78,11 +72,6 @@ src_prepare() {
 
 	echo "gtk/gnome/compiz-wm.desktop.in" >> "${S}/po/POTFILES.skip"
 	echo "metadata/core.xml.in" >> "${S}/po/POTFILES.skip"
-
-	if use kde; then
-		$(has_version ">=kde-base/kwin-4.8") && \
-			epatch "${FILESDIR}/${P}-kde-4.8.patch"
-	fi
 }
 
 src_configure() {
@@ -90,7 +79,6 @@ src_configure() {
 		"$(cmake-utils_use_use gnome GCONF)"
 		"$(cmake-utils_use_use gnome GNOME)"
 		"$(cmake-utils_use_use gtk GTK)"
-		"$(cmake-utils_use_use kde KDE4)"
 		"-DCMAKE_C_FLAGS="
 		"-DCMAKE_CXX_FLAGS="
 		"-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON"
