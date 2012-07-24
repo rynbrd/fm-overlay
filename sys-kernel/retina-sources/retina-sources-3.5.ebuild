@@ -35,7 +35,7 @@ any device other than the MacBook Pro 10,1 Retina due to the nature of some of
 the patches."
 
 src_install() {
-	mv "${WORKDIR}/linux-${KV_FULL}" "${WORKDIR}/linux-${KV_FULL%-*}-retina-${KV_FULL##*-}"
+	mv "${WORKDIR}/linux-${KV_FULL}" "${WORKDIR}/linux-${KV_FULL%-*}-retina"
 	kernel-2_src_install
 }
 
