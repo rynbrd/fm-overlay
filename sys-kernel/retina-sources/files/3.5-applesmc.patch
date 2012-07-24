@@ -1,6 +1,6 @@
 diff -urNp a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
---- a/drivers/hwmon/applesmc.c	2012-07-08 00:32:24.938451001 -0500
-+++ b/drivers/hwmon/applesmc.c	2012-07-10 23:15:26.115695000 -0500
+--- a/drivers/hwmon/applesmc.c	2012-07-21 15:58:29.000000000 -0500
++++ b/drivers/hwmon/applesmc.c	2012-07-23 19:17:37.822089819 -0500
 @@ -54,7 +54,7 @@
  #define APPLESMC_MAX_DATA_LENGTH 32
  
