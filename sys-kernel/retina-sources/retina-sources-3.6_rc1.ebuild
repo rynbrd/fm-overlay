@@ -22,7 +22,8 @@ UNIPATCH_LIST="
 inherit kernel-2
 detect_version
 
-MY_S="${WORKDIR}/linux-${KV_FULL%-*}-retina-${KV_FULL#*_}"
+echo $KV_FULL
+MY_S="${WORKDIR}/linux-${KV_FULL%-*}-retina-${KV_FULL#*-}"
 
 DESCRIPTION="The -git kernel with patches applied to support the MacBook Pro 10,1 Retina"
 HOMEPAGE="http://www.kernel.org"
