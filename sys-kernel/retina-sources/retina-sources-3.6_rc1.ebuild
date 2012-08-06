@@ -22,6 +22,8 @@ UNIPATCH_LIST="
 inherit kernel-2
 detect_version
 
+MY_S="${WORKDIR}/linux-${KV_FULL%-*}-retina-${KV_FULL#*_}"
+
 DESCRIPTION="The -git kernel with patches applied to support the MacBook Pro 10,1 Retina"
 HOMEPAGE="http://www.kernel.org"
 SRC_URI="${KERNEL_URI}"
@@ -33,9 +35,10 @@ K_EXTRAEINFO="This kernel is not supported by Gentoo. It should not be used on
 any device other than the MacBook Pro 10,1 Retina due to the nature of some of
 the patches."
 
-src_install() {
-	mv "${WORKDIR}/linux-${KV_FULL}" "${WORKDIR}/linux-${KV_FULL%-*}-retina"
-	kernel-2_src_install
+src_unpack() {
+	kernel-2_src_unpack
+	mv "$S" "$MY_S"
+	S="$MY_S"
 }
 
 pkg_postinst() {
