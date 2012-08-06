@@ -17,7 +17,8 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}
-	x11-themes/gtk-engines-murrine"
+	x11-themes/gtk-engines-murrine
+	x11-themes/gtk-engines-unico"
 
 S="${WORKDIR}/Boomerang_GTK_by ghogaru"
 
