@@ -10,7 +10,7 @@ DESCRIPTION="Boomerang GTK2/3 Theme"
 HOMEPAGE="http://ghogaru.deviantart.com/art/Boomerang-GTK3-189180645"
 SRC_URI="http://www.deviantart.com/download/189180645/${MY_PKG}"
 
-LICENSE=""
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE=""
@@ -40,7 +40,7 @@ src_prepare() {
 
 src_install() {
 	THEMES="/usr/share/themes"
-	DOCS="/usr/share/docs/${P}"
+	DOCS="/usr/share/doc/${P}"
 	dodir "$THEMES"
 	cp -rf "${S}/Boomerang" "${D}${THEMES}/"
 	cp -rf "${S}/Boomerang-Deux" "${D}${THEMES}/"
