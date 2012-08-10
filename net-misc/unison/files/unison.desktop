@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Name=Unison
+GenericName=File Synchronizer
+Comment=Unison is an efficient cross-platform file synchronizer.
+Exec=unison
+Icon=unison
+StartupNotify=false
+Terminal=false
+Type=Application
+MimeType=text/plain;
+Categories=Utility;
