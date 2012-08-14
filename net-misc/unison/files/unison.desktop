@@ -8,5 +8,4 @@ Icon=unison
 StartupNotify=false
 Terminal=false
 Type=Application
-MimeType=text/plain;
 Categories=Utility;
