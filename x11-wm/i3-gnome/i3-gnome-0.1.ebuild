@@ -16,7 +16,6 @@ IUSE=""
 DEPEND="
 	>=net-wireless/gnome-bluetooth-3.4.0
 	>=gnome-base/gnome-keyring-3.4.0
-	>=gnome-extra/gnome-power-manager-3.4.0
 	>=gnome-base/gnome-settings-daemon-3.4.0
 	gnome-extra/nm-applet
 	x11-wm/i3
