@@ -16,8 +16,7 @@ KEYWORDS="amd64 x86"
 IUSE=""
 
 DEPEND=""
-RDEPEND="${DEPEND}
-	gnome-base/gnome-shell"
+RDEPEND="${DEPEND}"
 
 S="${WORKDIR}"
 
