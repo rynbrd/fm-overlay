@@ -4,11 +4,11 @@
 
 EAPI=4
 
-MY_PKG="faience_icon_theme_by_tiheum-d47vo5d.zip"
+MY_PKG="faience-icon-theme_0.5.zip"
 
 DESCRIPTION="Faience icon theme."
 HOMEPAGE="http://tiheum.deviantart.com/art/Faience-icon-theme-255099649"
-SRC_URI="http://www.deviantart.com/download/255099649/${MY_PKG}"
+SRC_URI="http://dl.dropbox.com/u/9966975/${MY_PKG}"
 
 LICENSE="GPL-3"
 SLOT="0"
