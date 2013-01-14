@@ -1,6 +1,6 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/x11-drivers/nvidia-drivers/nvidia-drivers-310.19.ebuild,v 1.4 2012/12/19 16:52:01 tetromino Exp $
 
 EAPI=4
 
@@ -149,6 +149,9 @@ src_prepare() {
 
 	# Allow user patches so they can support RC kernels and whatever else
 	epatch_user
+	if kernel_is 3 7 || kernel_is 3 8; then
+		epatch "${FILESDIR}"/kernel38.patch
+	fi
 }
 
 src_compile() {
