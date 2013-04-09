@@ -19,8 +19,8 @@ DEPEND="
 	>=gnome-base/gnome-settings-daemon-3.6.0
 	gnome-extra/nm-applet
 	=x11-wm/i3-4.5
-	=x11-misc/i3lock-2.4.1
-	=x11-misc/i3status-2.6
+	>=x11-misc/i3lock-2.4.1
+	>=x11-misc/i3status-2.6
 	x11-misc/notification-daemon
 "
 RDEPEND="${DEPEND}"
