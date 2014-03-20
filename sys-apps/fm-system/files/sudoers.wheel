@@ -1,0 +1,2 @@
+# Members of wheel may sudo with a password.
+%wheel ALL=(ALL) ALL
