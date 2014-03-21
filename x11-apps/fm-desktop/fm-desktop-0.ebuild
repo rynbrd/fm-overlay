@@ -23,6 +23,7 @@ DEPEND="
 	sys-apps/fm-system
 	sys-apps/the_silver_searcher
 	virtual/notification-daemon
+	x11-apps/xrandr
 	x11-base/xorg-server
 	x11-misc/dmenu
 	x11-misc/slim
