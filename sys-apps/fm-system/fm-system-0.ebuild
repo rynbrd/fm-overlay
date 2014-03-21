@@ -25,6 +25,7 @@ DEPEND="
 	app-portage/layman
 	dev-python/pystache
 	dev-vcs/git
+	dev-vcs/tig
 	net-misc/dhcpcd
 	net-misc/ntp
 	net-misc/openssh
