@@ -7,19 +7,20 @@ EAPI=5
 inherit eutils flag-o-matic linux-info linux-mod multilib nvidia-driver \
 	portability toolchain-funcs unpacker user udev
 
+MY_PV="${PV%-*}"
 NV_URI="http://us.download.nvidia.com/XFree86/"
-X86_NV_PACKAGE="NVIDIA-Linux-x86-${PV}"
-AMD64_NV_PACKAGE="NVIDIA-Linux-x86_64-${PV}"
-X86_FBSD_NV_PACKAGE="NVIDIA-FreeBSD-x86-${PV}"
-AMD64_FBSD_NV_PACKAGE="NVIDIA-FreeBSD-x86_64-${PV}"
+X86_NV_PACKAGE="NVIDIA-Linux-x86-${MY_PV}"
+AMD64_NV_PACKAGE="NVIDIA-Linux-x86_64-${MY_PV}"
+X86_FBSD_NV_PACKAGE="NVIDIA-FreeBSD-x86-${MY_PV}"
+AMD64_FBSD_NV_PACKAGE="NVIDIA-FreeBSD-x86_64-${MY_PV}"
 
 DESCRIPTION="NVIDIA X11 driver and GLX libraries"
 HOMEPAGE="http://www.nvidia.com/"
 SRC_URI="
-	amd64-fbsd? ( ${NV_URI}FreeBSD-x86_64/${PV}/${AMD64_FBSD_NV_PACKAGE}.tar.gz )
-	amd64? ( ${NV_URI}Linux-x86_64/${PV}/${AMD64_NV_PACKAGE}.run )
-	x86-fbsd? ( ${NV_URI}FreeBSD-x86/${PV}/${X86_FBSD_NV_PACKAGE}.tar.gz )
-	x86? ( ${NV_URI}Linux-x86/${PV}/${X86_NV_PACKAGE}.run )
+	amd64-fbsd? ( ${NV_URI}FreeBSD-x86_64/${MY_PV}/${AMD64_FBSD_NV_PACKAGE}.tar.gz )
+	amd64? ( ${NV_URI}Linux-x86_64/${MY_PV}/${AMD64_NV_PACKAGE}.run )
+	x86-fbsd? ( ${NV_URI}FreeBSD-x86/${MY_PV}/${X86_FBSD_NV_PACKAGE}.tar.gz )
+	x86? ( ${NV_URI}Linux-x86/${MY_PV}/${X86_NV_PACKAGE}.run )
 "
 
 LICENSE="GPL-2 NVIDIA-r1"
@@ -142,7 +143,7 @@ pkg_setup() {
 		NV_SRC="${S}/kernel"
 		NV_MAN="${S}"
 		NV_X11="${S}"
-		NV_SOVER=${PV}
+		NV_SOVER=${MY_PV}
 	else
 		die "Could not determine proper NVIDIA package"
 	fi
@@ -169,7 +170,11 @@ src_prepare() {
 		convert_to_m "${NV_SRC}"/Makefile.kbuild
 	fi
 
-	epatch "${FILESDIR}"/nvidia-319.49_kernel-3.11.patch
+    if kernel_is -ge 3 13; then
+		epatch "${FILESDIR}"/nvidia-319.49_kernel-3.13.patch
+	elif kernel_is -ge 3 11; then
+		epatch "${FILESDIR}"/nvidia-319.49_kernel-3.11.patch
+	fi
 
 	if use pax_kernel; then
 		ewarn "Using PAX patches is not supported. You will be asked to"
