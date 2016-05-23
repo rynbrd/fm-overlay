@@ -11,43 +11,32 @@ SRC_URI=""
 LICENSE="BSD-modified"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="avahi bluetooth distcc laptop networkmanager nfs wifi zfs"
+IUSE="avahi bluetooth laptop networkmanager"
 
 DEPEND="
-	>=sys-devel/gcc-4.8.0
-	app-admin/logrotate
 	app-admin/sudo
-	app-admin/syslog-ng
 	app-editors/vim
 	app-misc/tmux
 	app-portage/eix
-	app-portage/gentoolkit
-	app-portage/layman
-	dev-python/pystache
+	app-shells/bash-completion
+	app-shells/gentoo-bashcomp
 	dev-vcs/git
-	dev-vcs/tig
-	net-misc/dhcpcd
+	net-firewall/iptables
 	net-misc/ntp
 	net-misc/openssh
 	sys-apps/mlocate
 	sys-apps/pciutils
 	sys-apps/usbutils
-	sys-boot/grub
 	sys-kernel/genkernel-next
-	sys-libs/glibc[nscd]
-	sys-process/cronie
+	sys-power/pm-utils
 	avahi? ( net-dns/avahi )
 	bluetooth? ( >=net-wireless/bluez-5.0 )
-	distcc? ( sys-devel/distcc )
 	laptop? (
 		app-laptop/laptop-mode-tools
 		sys-power/acpid
 		sys-power/powertop
 	)
 	networkmanager? ( net-misc/networkmanager )
-	nfs? ( net-fs/nfs-utils )
-	wifi? ( net-wireless/wpa_supplicant )
-	zfs? ( sys-fs/zfs )
 "
 RDEPEND="${DEPEND}"
 
@@ -63,38 +52,23 @@ src_install() {
 
 pkg_config() {
 	eselect editor set /usr/bin/vi
-	rc-config add cronie default
-	rc-config add nscd default
-	rc-config add ntpd default
-	rc-config add sshd default
-	rc-config add syslog-ng default
+	systemctl enable ntpd.service
+	systemctl enable sshd.service
 
 	if use avahi; then
-		rc-config add avahi-daemon default
+		systemctl enable avahi-daemon.service
 	fi
 
 	if use bluetooth; then
-		rc-config add bluetooth default
-	fi
-
-	if use distcc; then
-		rc-config add distccd default
+		systemctl enable bluetooth.service
 	fi
 
 	if use laptop; then
-		rc-config add acpid default
-		rc-config add laptop_mode default
+		systemctl enable acpid.service
+		systemctl enable laptop_mode.service
 	fi
 
 	if use networkmanager; then
-		rc-config add NetworkManager default
-	fi
-
-	if use nfs; then
-		rc-config add nfs default
-	fi
-
-	if use zfs; then
-		rc-config add zfs default
+		systemctl enable NetworkManager.service
 	fi
 }
