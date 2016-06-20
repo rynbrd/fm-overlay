@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -27,6 +27,7 @@ CDEPEND="dev-lang/perl
 	x11-libs/xcb-util
 	x11-libs/xcb-util-cursor
 	x11-libs/xcb-util-keysyms
+	x11-libs/xcb-util-xrm
 	x11-libs/xcb-util-wm
 	pango? (
 		>=x11-libs/pango-1.30.0[X]
