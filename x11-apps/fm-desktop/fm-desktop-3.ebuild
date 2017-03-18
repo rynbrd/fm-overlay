@@ -11,17 +11,19 @@ SRC_URI=""
 LICENSE="BSD-modified"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="pulseaudio"
+IUSE="laptop pulseaudio"
 
 DEPEND="
-	>=x11-misc/i3lock-2.4.1
-	>=x11-misc/i3status-2.6
-	>=x11-wm/i3-4.5
+	dev-python/pystache
 	gnome-extra/nm-applet
 	media-fonts/terminus-font
+	media-gfx/feh
+	media-gfx/scrot
 	media-sound/alsa-utils
+	net-misc/x11-ssh-askpass
 	sys-apps/fm-system
 	sys-apps/the_silver_searcher
+	sys-power/acpi
 	virtual/notification-daemon
 	x11-apps/xdpyinfo
 	x11-apps/xinput
@@ -29,8 +31,17 @@ DEPEND="
 	x11-apps/xrandr
 	x11-base/xorg-server
 	x11-misc/dmenu
+	x11-misc/i3lock
+	x11-misc/i3status
+	x11-misc/notification-daemon
+	x11-misc/redshift
 	x11-misc/slim
 	x11-terms/rxvt-unicode
+	x11-wm/i3
+	laptop? (
+		app-laptop/dispad
+		x11-drivers/xf86-input-mtrack
+	)
 	pulseaudio? (
 		>=media-sound/pavucontrol-2.0
 		>=media-sound/pulseaudio-5.0

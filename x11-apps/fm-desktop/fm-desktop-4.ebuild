@@ -11,10 +11,9 @@ SRC_URI=""
 LICENSE="BSD-modified"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="laptop pulseaudio"
+IUSE="pulseaudio"
 
 DEPEND="
-	app-admin/sysstat
 	dev-python/pystache
 	gnome-extra/nm-applet
 	media-fonts/terminus-font
@@ -39,10 +38,6 @@ DEPEND="
 	x11-misc/slim
 	x11-terms/rxvt-unicode
 	x11-wm/i3
-	laptop? (
-		x11-drivers/xf86-input-mtrack
-		x11-misc/dispad
-	)
 	pulseaudio? (
 		>=media-sound/pavucontrol-2.0
 		>=media-sound/pulseaudio-5.0
